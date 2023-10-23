@@ -11,7 +11,10 @@ namespace ReceptionOfPatients
             using (AppContext appContext = new AppContext())
             {
                 var builder = WebApplication.CreateBuilder(args);
+                builder.Services.AddTransient<CrudDoctorServices>();
                 var app = builder.Build();
+                app.UseMiddleware<DoctorMiddleware>(appContext);
+                ///doctor?operation=read
                 app.MapGet("/", () => "Hello world");
                 app.Run();
             }           
