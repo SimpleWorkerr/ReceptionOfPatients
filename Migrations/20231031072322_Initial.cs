@@ -1,12 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace ReceptionOfPatients.Migrations
 {
     /// <inheritdoc />
-    public partial class INITIAL : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,14 +16,14 @@ namespace ReceptionOfPatients.Migrations
                 name: "Doctors",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FatherName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StartWorkDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OfficeNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Specialization = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Surname = table.Column<string>(type: "text", nullable: false),
+                    FatherName = table.Column<string>(type: "text", nullable: true),
+                    StartWorkDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    OfficeNumber = table.Column<string>(type: "text", nullable: false),
+                    Specialization = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,14 +34,14 @@ namespace ReceptionOfPatients.Migrations
                 name: "Patients",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FatherName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Surname = table.Column<string>(type: "text", nullable: false),
+                    FatherName = table.Column<string>(type: "text", nullable: true),
+                    BirthDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Address = table.Column<string>(type: "text", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,16 +52,16 @@ namespace ReceptionOfPatients.Migrations
                 name: "ReceptionResults",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Decsription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Recomendation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Diagnosis = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Medicines = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsesServices = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DoctorInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PatientInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReceptionId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Decsription = table.Column<string>(type: "text", nullable: true),
+                    Recomendation = table.Column<string>(type: "text", nullable: true),
+                    Diagnosis = table.Column<string>(type: "text", nullable: true),
+                    Medicines = table.Column<string>(type: "text", nullable: true),
+                    UsesServices = table.Column<string>(type: "text", nullable: true),
+                    DoctorInfo = table.Column<string>(type: "text", nullable: true),
+                    PatientInfo = table.Column<string>(type: "text", nullable: true),
+                    ReceptionId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -71,10 +72,10 @@ namespace ReceptionOfPatients.Migrations
                 name: "Services",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    ServiceName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Price = table.Column<double>(type: "double precision", nullable: false),
+                    ServiceName = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,10 +86,11 @@ namespace ReceptionOfPatients.Migrations
                 name: "Receptions",
                 columns: table => new
                 {
-                    DoctorId = table.Column<int>(type: "int", nullable: false),
-                    PatientId = table.Column<int>(type: "int", nullable: false),
-                    ReceptionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReceptionResultId = table.Column<int>(type: "int", nullable: true)
+                    DoctorId = table.Column<int>(type: "integer", nullable: false),
+                    PatientId = table.Column<int>(type: "integer", nullable: false),
+                    ReceptionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false),
+                    ReceptionResultId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -116,8 +118,8 @@ namespace ReceptionOfPatients.Migrations
                 name: "DoctorService",
                 columns: table => new
                 {
-                    DoctorId = table.Column<int>(type: "int", nullable: false),
-                    ServicesId = table.Column<int>(type: "int", nullable: false)
+                    DoctorId = table.Column<int>(type: "integer", nullable: false),
+                    ServicesId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -150,8 +152,7 @@ namespace ReceptionOfPatients.Migrations
                 name: "IX_Receptions_ReceptionResultId",
                 table: "Receptions",
                 column: "ReceptionResultId",
-                unique: true,
-                filter: "[ReceptionResultId] IS NOT NULL");
+                unique: true);
         }
 
         /// <inheritdoc />
