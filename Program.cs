@@ -13,11 +13,15 @@ namespace ReceptionOfPatients
             {
                 var builder = WebApplication.CreateBuilder(args);
                 builder.Services.AddTransient<CrudDoctorServices>();
+                builder.Services.AddTransient<CrudPatientServices>();
                 
                 var app = builder.Build();
                 app.UseStaticFiles();
+                //doctor?operation=read
                 app.UseMiddleware<DoctorMiddleware>(appContext);
-                ///doctor?operation=read
+                //patient?operation=read
+                app.UseMiddleware<PatientMiddleware>(appContext);
+                
                 app.MapGet("/", () => "Hello world");
                 app.Run();
             }           
