@@ -4,6 +4,8 @@
     {
         public DateTime ReceptionDate { get; set; }
 
+        public int Id { get; set; }
+
         //Доктор
         public int DoctorId { get; set; }
         public Doctor? Doctor { get; set; }

@@ -19,7 +19,7 @@ namespace ReceptionOfPatients
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Database=PatientReceptions;Username=postgres;Password=123");
+            optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Database=PatientReception;Username=postgres;Password=123");
             //optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Trusted_connection=True;Database=ReceptionClient");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
