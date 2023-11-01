@@ -41,6 +41,8 @@ namespace ReceptionOfPatients
                         j.HasKey(t => new { t.DoctorId, t.PatientId });
                         j.ToTable("Receptions");
                     });
+
+            modelBuilder.Entity<Reception>().Property(rec => rec.Id).HasPrecision(1, 1);
         }
     }
 }

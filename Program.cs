@@ -16,7 +16,7 @@ namespace ReceptionOfPatients
                 builder.Services.AddTransient<CrudPatientServices>();
                 builder.Services.AddTransient<CrudServiceServices>();
                 builder.Services.AddTransient<CrudReceptionServices>();
-                //Добавление сервиса завершённых приёмов
+                builder.Services.AddTransient<CrudReceptionResultServices>();
 
 
                 var app = builder.Build();
@@ -29,7 +29,8 @@ namespace ReceptionOfPatients
                 app.UseMiddleware<ServiceMiddleware>(appContext);
                 //reception?operation=read
                 app.UseMiddleware<ReceptionMiddleware>(appContext);
-
+                //receptionResult?operation=read
+                app.UseMiddleware<ReceptionResultMiddleware>(appContext);
 
                 app.MapGet("/", () => "Hello world");
                 app.Run();
