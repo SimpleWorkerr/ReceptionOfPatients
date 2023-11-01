@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ReceptionOfPatients.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class INITIAL : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -89,7 +89,7 @@ namespace ReceptionOfPatients.Migrations
                     DoctorId = table.Column<int>(type: "integer", nullable: false),
                     PatientId = table.Column<int>(type: "integer", nullable: false),
                     ReceptionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Id = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<int>(type: "integer", precision: 1, scale: 1, nullable: false),
                     ReceptionResultId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>

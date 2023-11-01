@@ -115,6 +115,7 @@ namespace ReceptionOfPatients.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("Id")
+                        .HasPrecision(1, 1)
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("ReceptionDate")

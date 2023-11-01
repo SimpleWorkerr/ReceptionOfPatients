@@ -12,8 +12,8 @@ using ReceptionOfPatients;
 namespace ReceptionOfPatients.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20231031072322_Initial")]
-    partial class Initial
+    [Migration("20231101035831_INITIAL")]
+    partial class INITIAL
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -118,6 +118,7 @@ namespace ReceptionOfPatients.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("Id")
+                        .HasPrecision(1, 1)
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("ReceptionDate")
