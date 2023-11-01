@@ -27,6 +27,14 @@ namespace ReceptionOfPatients
             HttpResponse response = context.Response;
             HttpRequest request = context.Request;
 
+            JsonSerializerOptions options = new()
+            {
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true,
+
+            };
+
             if (request.Path == "/doctor")
             {
                 var operation = request.Query["operation"];
@@ -35,7 +43,7 @@ namespace ReceptionOfPatients
                 {
                     case "create":
 
-                        
+
                         services.CreateRange(_appContext, await request.ReadFromJsonAsync<List<Doctor>>());
 
                         break;
@@ -53,17 +61,17 @@ namespace ReceptionOfPatients
                         break;
 
                     case "read":
-                        JsonSerializerOptions options = new()
-                        {
-                            Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-                            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-                            WriteIndented = true,
-                            
-                        };
+
                         await response.WriteAsJsonAsync(services.Read(_appContext), options);
 
                         break;
 
+                    case "read_patients":
+
+                        //await response.WriteAsJsonAsync(services.PatientsBtn(_appContext, await request.ReadFromJsonAsync<int>()));
+                        await response.WriteAsJsonAsync(services.PatientsBtn(_appContext, 1), options);
+                        break;
+                        
                     default:
                         await response.WriteAsJsonAsync(new ErrorClass() { Name = "Doctor error", Description = "Unexpected operation" });
                         break;

@@ -31,7 +31,7 @@ namespace ReceptionOfPatients
 
         public List<Doctor> Read(AppContext context)
         {
-            var tempValue = context.Doctors;
+            var tempValue = context.Doctors.Include(doc => doc.Services);
 
             return tempValue.ToList();
         }
@@ -44,6 +44,15 @@ namespace ReceptionOfPatients
                 context.SaveChanges();
 
             }
+        }
+
+        public List<Patient> PatientsBtn(AppContext context, int doctorId)
+        {
+            var tempValue = from reception in context.Receptions
+                            where reception.DoctorId == doctorId
+                            select reception.Patient;
+
+            return tempValue.ToList();
         }
     }
 }

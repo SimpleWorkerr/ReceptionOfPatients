@@ -32,7 +32,7 @@ namespace ReceptionOfPatients
                 //receptionResult?operation=read
                 app.UseMiddleware<ReceptionResultMiddleware>(appContext);
 
-                AddData();
+                //AddData();
 
                 app.MapGet("/", () => "Hello world");
                 app.Run();
