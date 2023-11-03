@@ -46,7 +46,7 @@ namespace ReceptionOfPatients
             }
         }
 
-        public List<Patient> PatientsBtn(AppContext context, int doctorId)
+        public List<Patient> GetDoctors(AppContext context, int doctorId)
         {
             var tempValue = from reception in context.Receptions
                             where reception.DoctorId == doctorId

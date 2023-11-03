@@ -20,7 +20,13 @@ namespace ReceptionOfPatients
         {
             HttpResponse response = context.Response;
             HttpRequest request = context.Request;
+            JsonSerializerOptions options = new()
+            {
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true,
 
+            };
             if (request.Path == "/patient")
             {
                 var operation = request.Query["operation"];
@@ -28,34 +34,25 @@ namespace ReceptionOfPatients
                 switch (operation)
                 {
                     case "create":
-
-
                         services.CreateRange(_appContext, await request.ReadFromJsonAsync<List<Patient>>());
-
                         break;
 
                     case "update":
-
                         services.UpdateRange(_appContext, await request.ReadFromJsonAsync<List<Patient>>());
-
                         break;
 
                     case "delete":
-
                         services.DeleteRange(_appContext, await request.ReadFromJsonAsync<List<int>>());
-
                         break;
 
                     case "read":
-                        JsonSerializerOptions options = new()
-                        {
-                            Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-                            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-                            WriteIndented = true,
-
-                        };
                         await response.WriteAsJsonAsync(services.Read(_appContext), options);
+                        break;
 
+                    case "read_doctors":
+
+                        //await response.WriteAsJsonAsync(services.PatientsBtn(_appContext, await request.ReadFromJsonAsync<int>()));
+                        await response.WriteAsJsonAsync(services.GetDoctors(_appContext, 1), options);
                         break;
 
                     default:

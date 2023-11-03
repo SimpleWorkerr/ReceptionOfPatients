@@ -43,5 +43,14 @@ namespace ReceptionOfPatients
 
             }
         }
+
+        public List<Doctor> GetDoctors(AppContext context, int patientId)
+        {
+            var tempValue = from rec in context.Receptions
+                            where rec.PatientId == patientId
+                            select rec.Doctor;
+
+            return tempValue.ToList();
+        }
     }
 }
