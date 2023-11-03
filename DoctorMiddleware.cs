@@ -50,13 +50,13 @@ namespace ReceptionOfPatients
 
                     case "update":
 
-                        services.UpdateRange(_appContext, await request.ReadFromJsonAsync<List<Doctor>>());
+                        services.Update(_appContext, await request.ReadFromJsonAsync<Doctor>());
 
                         break;
 
                     case "delete":
 
-                        services.DeleteRange(_appContext, await request.ReadFromJsonAsync<List<int>>());
+                        services.Delete(_appContext, await request.ReadFromJsonAsync<int>());
 
                         break;
 

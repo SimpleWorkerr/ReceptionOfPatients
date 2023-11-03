@@ -38,11 +38,11 @@ namespace ReceptionOfPatients
                         break;
 
                     case "update":
-                        services.UpdateRange(_appContext, await request.ReadFromJsonAsync<List<Patient>>());
+                        services.Update(_appContext, await request.ReadFromJsonAsync<Patient>());
                         break;
 
                     case "delete":
-                        services.DeleteRange(_appContext, await request.ReadFromJsonAsync<List<int>>());
+                        services.Delete(_appContext, await request.ReadFromJsonAsync<int>());
                         break;
 
                     case "read":

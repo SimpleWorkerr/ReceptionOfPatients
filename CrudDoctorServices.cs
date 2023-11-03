@@ -17,16 +17,10 @@ namespace ReceptionOfPatients
             }
         }
 
-        public void DeleteRange(AppContext context, IEnumerable<int>? indexes)
+        public void Delete(AppContext context, int index)
         {
-            if (indexes != null)
-            {
-
-                foreach (int index in indexes)
-                    context.Doctors.Remove(context.Doctors.First(doc => doc.Id == index));
-
-                context.SaveChanges();
-            }
+            context.Doctors.Remove(context.Doctors.First(doc => doc.Id == index));
+            context.SaveChanges();
         }
 
         public List<Doctor> Read(AppContext context)
@@ -36,13 +30,14 @@ namespace ReceptionOfPatients
             return tempValue.ToList();
         }
 
-        public void UpdateRange(AppContext context, IEnumerable<Doctor>? values)
+        public void Update(AppContext context, Doctor? value)
         {
-            if (values != null)
-            {
-                context.Doctors.UpdateRange(values);
-                context.SaveChanges();
 
+            if (value != null)
+            {
+                context.Doctors.Update(value);
+
+                context.SaveChanges();
             }
         }
 

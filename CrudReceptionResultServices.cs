@@ -2,23 +2,20 @@
 
 namespace ReceptionOfPatients
 {
-    public class CrudReceptionResultServices:ICRUDUtilitis<ReceptionResult>
+    public class CrudReceptionResultServices : ICRUDUtilitis<ReceptionResult>
     {
         public void CreateRange(AppContext context, IEnumerable<ReceptionResult>? values)
         {
             throw new NotImplementedException("Такая операция не подразумевается");
         }
 
-        public void DeleteRange(AppContext context, IEnumerable<int>? indexes)
+        public void Delete(AppContext context, int index)
         {
-            if (indexes != null)
-            {
 
-                foreach (int index in indexes)
-                    context.ReceptionResults.Remove(context.ReceptionResults.First(ser => ser.Id == index));
+            context.ReceptionResults.Remove(context.ReceptionResults.First(ser => ser.Id == index));
 
-                context.SaveChanges();
-            }
+            context.SaveChanges();
+
         }
 
         public List<ReceptionResult> Read(AppContext context)
@@ -28,11 +25,11 @@ namespace ReceptionOfPatients
             return tempValue.ToList();
         }
 
-        public void UpdateRange(AppContext context, IEnumerable<ReceptionResult>? values)
+        public void Update(AppContext context, ReceptionResult? value)
         {
-            if (values != null)
+            if (value != null)
             {
-                context.ReceptionResults.UpdateRange(values);
+                context.ReceptionResults.UpdateRange(value);
                 context.SaveChanges();
 
             }

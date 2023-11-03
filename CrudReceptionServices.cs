@@ -15,22 +15,19 @@ namespace ReceptionOfPatients
             }
         }
 
-        public void DeleteRange(AppContext context, IEnumerable<int>? indexes)
+        public void Delete(AppContext context, int index)
         {
-            if (indexes != null)
-            {
 
-                foreach (int index in indexes)
-                    context.Receptions.Remove(context.Receptions.First(rec => rec.Id == index));
+            context.Receptions.Remove(context.Receptions.First(rec => rec.Id == index));
 
-                context.SaveChanges();
-            }
+            context.SaveChanges();
+
         }
-        public void FinishRange(AppContext context, IEnumerable<ReceptionResult>? values)
+        public void Finish(AppContext context, ReceptionResult? value)
         {
-            if (values != null)
+            if (value != null)
             {
-                context.ReceptionResults.AddRange(values);
+                context.ReceptionResults.AddRange(value);
 
                 context.SaveChanges();
             }
@@ -43,11 +40,11 @@ namespace ReceptionOfPatients
             return tempValue.ToList();
         }
 
-        public void UpdateRange(AppContext context, IEnumerable<Reception>? values)
+        public void Update(AppContext context, Reception? value)
         {
-            if (values != null)
+            if (value != null)
             {
-                context.Receptions.UpdateRange(values);
+                context.Receptions.UpdateRange(value);
                 context.SaveChanges();
 
             }
@@ -55,7 +52,7 @@ namespace ReceptionOfPatients
 
         public Doctor? GetDoctorByReceptionId(AppContext context, (int, int) receptionId)
         {
-            var receptionRes = context.Receptions.FirstOrDefault((rec)=> rec.DoctorId == receptionId.Item1 && rec.PatientId == receptionId.Item2);
+            var receptionRes = context.Receptions.FirstOrDefault((rec) => rec.DoctorId == receptionId.Item1 && rec.PatientId == receptionId.Item2);
 
             return receptionRes?.Doctor;
         }
