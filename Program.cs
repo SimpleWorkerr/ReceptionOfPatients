@@ -18,6 +18,7 @@
                 var app = builder.Build();
                 app.UseStaticFiles();
                 //doctor?operation=read
+
                 app.UseMiddleware<DoctorMiddleware>(appContext);
                 //patient?operation=read
                 app.UseMiddleware<PatientMiddleware>(appContext);
@@ -28,9 +29,8 @@
                 //receptionResult?operation=read
                 app.UseMiddleware<ReceptionResultMiddleware>(appContext);
 
-                AddData();
+                app.UseMiddleware<BasicPageMiddleware>(appContext);
 
-                app.MapGet("/", () => "Hello world");
                 app.Run();
             }
             

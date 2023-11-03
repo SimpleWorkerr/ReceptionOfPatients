@@ -24,6 +24,7 @@ namespace ReceptionOfPatients
             {
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
                 ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                
                 WriteIndented = true,
 
             };
