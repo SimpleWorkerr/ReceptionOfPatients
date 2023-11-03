@@ -1,9 +1,11 @@
-﻿namespace ReceptionOfPatients
+﻿using System.ComponentModel.DataAnnotations.Schema;
+namespace ReceptionOfPatients
 {
     public class Reception
     {
         public DateTime ReceptionDate { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         //Доктор

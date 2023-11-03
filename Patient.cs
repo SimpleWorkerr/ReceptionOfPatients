@@ -14,6 +14,7 @@ namespace ReceptionOfPatients
 
         public List<Doctor> Doctors { get; set; } = new();
         public List<Reception> Receptions { get; set; } = new();
+        public List<Service?> Services { get; set; } = new();
 
         public override string ToString()
         {

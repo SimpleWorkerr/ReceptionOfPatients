@@ -62,6 +62,7 @@ namespace ReceptionOfPatients
 
                     case "read_patients":
                         //await response.WriteAsJsonAsync(services.GetPatientsByService(_appContext, await request.ReadFromJsonAsync<int>()), options);
+
                         await response.WriteAsJsonAsync(services.GetPatientsByService(_appContext, 1), options);
 
                         break;

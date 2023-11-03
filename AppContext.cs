@@ -3,6 +3,7 @@ using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Diagnostics.Metrics;
 using System;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ReceptionOfPatients
 {
@@ -41,8 +42,7 @@ namespace ReceptionOfPatients
                         j.HasKey(t => new { t.DoctorId, t.PatientId });
                         j.ToTable("Receptions");
                     });
-
-            modelBuilder.Entity<Reception>().Property(rec => rec.Id).HasPrecision(1, 1);
+            
         }
     }
 }

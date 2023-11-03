@@ -12,7 +12,7 @@ using ReceptionOfPatients;
 namespace ReceptionOfPatients.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20231101035831_INITIAL")]
+    [Migration("20231103082635_INITIAL")]
     partial class INITIAL
     {
         /// <inheritdoc />
@@ -27,17 +27,32 @@ namespace ReceptionOfPatients.Migrations
 
             modelBuilder.Entity("DoctorService", b =>
                 {
-                    b.Property<int>("DoctorId")
+                    b.Property<int>("DoctorsId")
                         .HasColumnType("integer");
 
                     b.Property<int>("ServicesId")
                         .HasColumnType("integer");
 
-                    b.HasKey("DoctorId", "ServicesId");
+                    b.HasKey("DoctorsId", "ServicesId");
 
                     b.HasIndex("ServicesId");
 
                     b.ToTable("DoctorService");
+                });
+
+            modelBuilder.Entity("PatientService", b =>
+                {
+                    b.Property<int>("PatientsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ServicesId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("PatientsId", "ServicesId");
+
+                    b.HasIndex("ServicesId");
+
+                    b.ToTable("PatientService");
                 });
 
             modelBuilder.Entity("ReceptionOfPatients.Doctor", b =>
@@ -118,8 +133,10 @@ namespace ReceptionOfPatients.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("Id")
-                        .HasPrecision(1, 1)
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("ReceptionDate")
                         .HasColumnType("timestamp with time zone");
@@ -198,7 +215,22 @@ namespace ReceptionOfPatients.Migrations
                 {
                     b.HasOne("ReceptionOfPatients.Doctor", null)
                         .WithMany()
-                        .HasForeignKey("DoctorId")
+                        .HasForeignKey("DoctorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ReceptionOfPatients.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServicesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PatientService", b =>
+                {
+                    b.HasOne("ReceptionOfPatients.Patient", null)
+                        .WithMany()
+                        .HasForeignKey("PatientsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

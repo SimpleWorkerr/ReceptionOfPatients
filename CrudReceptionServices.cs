@@ -50,16 +50,16 @@ namespace ReceptionOfPatients
             }
         }
 
-        public Doctor? GetDoctorByReceptionId(AppContext context, (int, int) receptionId)
+        public Doctor? GetDoctorByReceptionId(AppContext context, int receptionId)
         {
-            var receptionRes = context.Receptions.FirstOrDefault((rec) => rec.DoctorId == receptionId.Item1 && rec.PatientId == receptionId.Item2);
+            var receptionRes = context.Receptions.FirstOrDefault(rec => rec.Id == receptionId);
 
             return receptionRes?.Doctor;
         }
 
-        public Patient? GetPatientByReceptionId(AppContext context, (int, int) receptionId)
+        public Patient? GetPatientByReceptionId(AppContext context, int receptionId)
         {
-            var receptionRes = context.Receptions.FirstOrDefault((rec) => rec.DoctorId == receptionId.Item1 && rec.PatientId == receptionId.Item2);
+            var receptionRes = context.Receptions.FirstOrDefault(rec => rec.Id == receptionId);
 
             return receptionRes?.Patient;
         }

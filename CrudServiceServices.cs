@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ReceptionOfPatients
 {
@@ -41,32 +42,34 @@ namespace ReceptionOfPatients
             }
         }
 
-        public List<Doctor> GetDoctorsByService(AppContext context, int serviceId)
+        public List<Doctor?> GetDoctorsByService(AppContext context, int serviceId)
         {
-            List<Doctor> docRes = new List<Doctor>();
+            List<Doctor?> docRes = new List<Doctor?>();
 
-            foreach (var doc in context.Doctors)
+            foreach(var value in context.Services.Include(ser => ser.Doctors))
             {
-                foreach (var serv in doc.Services)
+                if(value.Id == serviceId)
                 {
-                    if (serv.Id == serviceId)
-                    {
-                        docRes.Add(doc);
-                        break;
-                    }
+                    docRes = value.Doctors;
+                    break;
                 }
             }
 
             return docRes;
         }
 
-        public List<Patient> GetPatientsByService(AppContext context, int serviceId)
+        public List<Patient?> GetPatientsByService(AppContext context, int serviceId)
         {
-            List<Patient> patRes = new List<Patient>();
+            List<Patient?> patRes = new List<Patient?>();
 
-            foreach (var doc in GetDoctorsByService(context, serviceId))
-                patRes.AddRange(doc.Patients);
-
+            foreach (var value in context.Services.Include(ser => ser.Patients))
+            {
+                if (value.Id == serviceId)
+                {
+                    patRes = value.Patients;
+                    break;
+                }
+            }
             return patRes;
         }
     }

@@ -67,15 +67,15 @@ namespace ReceptionOfPatients
                         break;
                     case "read_patient":
 
-                        //await response.WriteAsJsonAsync(services.GetDoctorByReceptionId(_appContext, await request.ReadFromJsonAsync<(int, int)>()), options);
-                        await response.WriteAsJsonAsync(services.GetPatientByReceptionId(_appContext, (1, 1)), options);
+                        //await response.WriteAsJsonAsync(services.GetDoctorByReceptionId(_appContext, await request.ReadFromJsonAsync<int>()), options);
+                        await response.WriteAsJsonAsync(services.GetPatientByReceptionId(_appContext, 1), options);
 
                         break;
 
                     case "read_doctor":
 
                         //await response.WriteAsJsonAsync(services.GetDoctorByReceptionId(_appContext, await request.ReadFromJsonAsync<(int, int)>()), options);
-                        await response.WriteAsJsonAsync(services.GetDoctorByReceptionId(_appContext, (1, 1)), options);
+                        await response.WriteAsJsonAsync(services.GetDoctorByReceptionId(_appContext, 1), options);
 
                         break;
 

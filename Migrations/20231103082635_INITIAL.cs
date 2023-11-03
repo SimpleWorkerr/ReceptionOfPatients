@@ -89,7 +89,8 @@ namespace ReceptionOfPatients.Migrations
                     DoctorId = table.Column<int>(type: "integer", nullable: false),
                     PatientId = table.Column<int>(type: "integer", nullable: false),
                     ReceptionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Id = table.Column<int>(type: "integer", precision: 1, scale: 1, nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ReceptionResultId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -118,15 +119,15 @@ namespace ReceptionOfPatients.Migrations
                 name: "DoctorService",
                 columns: table => new
                 {
-                    DoctorId = table.Column<int>(type: "integer", nullable: false),
+                    DoctorsId = table.Column<int>(type: "integer", nullable: false),
                     ServicesId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DoctorService", x => new { x.DoctorId, x.ServicesId });
+                    table.PrimaryKey("PK_DoctorService", x => new { x.DoctorsId, x.ServicesId });
                     table.ForeignKey(
-                        name: "FK_DoctorService_Doctors_DoctorId",
-                        column: x => x.DoctorId,
+                        name: "FK_DoctorService_Doctors_DoctorsId",
+                        column: x => x.DoctorsId,
                         principalTable: "Doctors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -138,9 +139,38 @@ namespace ReceptionOfPatients.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PatientService",
+                columns: table => new
+                {
+                    PatientsId = table.Column<int>(type: "integer", nullable: false),
+                    ServicesId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PatientService", x => new { x.PatientsId, x.ServicesId });
+                    table.ForeignKey(
+                        name: "FK_PatientService_Patients_PatientsId",
+                        column: x => x.PatientsId,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PatientService_Services_ServicesId",
+                        column: x => x.ServicesId,
+                        principalTable: "Services",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DoctorService_ServicesId",
                 table: "DoctorService",
+                column: "ServicesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PatientService_ServicesId",
+                table: "PatientService",
                 column: "ServicesId");
 
             migrationBuilder.CreateIndex(
@@ -160,6 +190,9 @@ namespace ReceptionOfPatients.Migrations
         {
             migrationBuilder.DropTable(
                 name: "DoctorService");
+
+            migrationBuilder.DropTable(
+                name: "PatientService");
 
             migrationBuilder.DropTable(
                 name: "Receptions");
