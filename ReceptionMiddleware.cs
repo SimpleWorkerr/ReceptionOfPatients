@@ -21,6 +21,14 @@ namespace ReceptionOfPatients
             HttpResponse response = context.Response;
             HttpRequest request = context.Request;
 
+            JsonSerializerOptions options = new()
+            {
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true,
+
+            };
+
             if (request.Path == "/reception")
             {
                 var operation = request.Query["operation"];
@@ -53,16 +61,24 @@ namespace ReceptionOfPatients
                         break;
 
                     case "read":
-                        JsonSerializerOptions options = new()
-                        {
-                            Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-                            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-                            WriteIndented = true,
 
-                        };
                         await response.WriteAsJsonAsync(services.Read(_appContext), options);
 
                         break;
+                    case "read_patient":
+
+                        //await response.WriteAsJsonAsync(services.GetDoctorByReceptionId(_appContext, await request.ReadFromJsonAsync<(int, int)>()), options);
+                        await response.WriteAsJsonAsync(services.GetPatientByReceptionId(_appContext, (1, 1)), options);
+
+                        break;
+
+                    case "read_doctor":
+
+                        //await response.WriteAsJsonAsync(services.GetDoctorByReceptionId(_appContext, await request.ReadFromJsonAsync<(int, int)>()), options);
+                        await response.WriteAsJsonAsync(services.GetDoctorByReceptionId(_appContext, (1, 1)), options);
+
+                        break;
+
 
                     default:
                         await response.WriteAsJsonAsync(new ErrorClass() { Name = "Reception error", Description = "Unexpected operation" });
