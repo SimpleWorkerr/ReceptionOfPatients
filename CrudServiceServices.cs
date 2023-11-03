@@ -43,5 +43,34 @@ namespace ReceptionOfPatients
 
             }
         }
+
+        public List<Doctor> GetDoctorsByService(AppContext context, int serviceId)
+        {
+            List<Doctor> docRes = new List<Doctor>();
+
+            foreach(var doc in context.Doctors)
+            {
+                foreach (var serv in doc.Services)
+                {
+                    if (serv.Id == serviceId)
+                    {
+                        docRes.Add(doc);
+                        break;
+                    }
+                }
+            }
+
+            return docRes;
+        }
+
+        public List<Patient> GetPatientsByService(AppContext context, int serviceId)
+        {
+            List<Patient> patRes = new List<Patient>();
+
+            foreach (var doc in GetDoctorsByService(context, serviceId))
+                patRes.AddRange(doc.Patients);
+
+            return patRes;
+        }
     }
 }

@@ -21,6 +21,14 @@ namespace ReceptionOfPatients
             HttpResponse response = context.Response;
             HttpRequest request = context.Request;
 
+            JsonSerializerOptions options = new()
+            {
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true,
+
+            };
+
             if (request.Path == "/service")
             {
                 var operation = request.Query["operation"];
@@ -47,14 +55,21 @@ namespace ReceptionOfPatients
                         break;
 
                     case "read":
-                        JsonSerializerOptions options = new()
-                        {
-                            Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-                            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-                            WriteIndented = true,
 
-                        };
                         await response.WriteAsJsonAsync(services.Read(_appContext), options);
+
+                        break;
+
+                    case "read_patients":
+                        //await response.WriteAsJsonAsync(services.GetPatientsByService(_appContext, await request.ReadFromJsonAsync<int>()), options);
+                        await response.WriteAsJsonAsync(services.GetPatientsByService(_appContext, 1), options);
+
+                        break;
+
+                    case "read_doctors":
+
+                        //await response.WriteAsJsonAsync(services.GetPatientsByService(_appContext, await request.ReadFromJsonAsync<int>()), options);
+                        await response.WriteAsJsonAsync(services.GetDoctorsByService(_appContext, 1), options);
 
                         break;
 
