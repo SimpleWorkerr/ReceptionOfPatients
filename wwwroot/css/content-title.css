@@ -1,0 +1,28 @@
+:root {
+  --primary-color: #5687c0;
+  --primary-light-color: #bed9f4;
+  --primary-dark-color: #275392;
+  --secondary-color: #afeeeb;
+  --secondary-dark-color: #75b9b5;
+  --text-dark-color: #161717;
+  --text-light-color: #f4f5f8;
+  --background-color: #f5f5f5;
+}
+
+.content__title {
+  text-align: center;
+  font-size: 40px;
+  color: var(--text-dark-color);
+  padding-bottom: 20px;
+}
+
+.content__title--link {
+  text-decoration: none;
+  color: var(--text-dark-color);
+  transition: .5s;
+}
+
+.content__title--link:hover {
+  text-decoration: none;
+  color: var(--primary-dark-color);
+}

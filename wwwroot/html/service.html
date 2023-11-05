@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service</title>
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Стили -->
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/service.css">
+    <link rel="stylesheet" href="../css/content-title.css">
+    <link rel="stylesheet" href="../css/buttons.css">
+</head>
+
+<body>
+    <script defer src="../js/modal-window.js"></script>
+    <div class="content">
+
+        <h1 class="content__title"><a class="content__title--link" href="../index.html">Reception of patients</a></h1>
+
+        <header class="header">
+            <div class="header__block header__block--doctors">
+                <h2 class="header__title">Услуги</h2>
+            </div>
+            <div class="header__block header__block--filters">
+                <h2 class="header__title">Фильтры</h2>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="main__articles">
+                <article class="article">
+                    <h2 class="article__title">Название</h2>
+                </article>
+                <article class="article">
+                    <h2 class="article__title">Цена</h2>
+                </article>
+            </div>
+            <div class="main__sidebar">
+                <button class="main__button">Изменить</button>
+                <button class="main__button">Удалить</button>
+                <button class="main__button"> <a href="../html/doctor.html">Доктора</a></button>
+                <button class="main__button"> <a href="../html/patient.html">Пациенты</a></button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <button class="footer__button footer__button--add" onclick="showModal()">
+                +
+            </button>
+            <button class="footer__button footer__button--save">
+                Сохранить
+            </button>
+        </footer>
+
+        <!-- Модальное окно -->
+        <div class="modal" id="modal">
+            <input type="text" placeholder="Название" id="name">
+            <input type="text" placeholder="Цена" id="price">
+            <div class="modal__buttons">
+                <button class="modal__buttons--saveData" onclick="saveData()">Сохранить</button>
+                <button class="modal__buttons--hideModal" onclick="hideModal()">Отменить</button>
+            </div>
+        </div>
+
+        <!-- Оверлей -->
+        <div id="overlay"></div>
+    </div>
+</body>
+
+</html>
