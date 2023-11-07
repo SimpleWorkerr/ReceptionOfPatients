@@ -4,7 +4,7 @@ namespace ReceptionOfPatients
 {
     public class CrudReceptionResultServices : ICRUDUtilitis<ReceptionResult>
     {
-        public void CreateRange(AppContext context, IEnumerable<ReceptionResult>? values)
+        public void Create(AppContext context, ReceptionResult? valuу)
         {
             throw new NotImplementedException("Такая операция не подразумевается");
         }

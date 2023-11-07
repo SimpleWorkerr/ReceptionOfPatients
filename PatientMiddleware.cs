@@ -35,7 +35,7 @@ namespace ReceptionOfPatients
                 switch (operation)
                 {
                     case "create":
-                        services.CreateRange(_appContext, await request.ReadFromJsonAsync<List<Patient>>());
+                        services.Create(_appContext, await request.ReadFromJsonAsync<Patient>());
                         break;
 
                     case "update":

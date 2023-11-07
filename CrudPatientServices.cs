@@ -4,12 +4,12 @@ namespace ReceptionOfPatients
 {
     public class CrudPatientServices : ICRUDUtilitis<Patient>
     {
-        public void CreateRange(AppContext context, IEnumerable<Patient>? values)
+        public void Create(AppContext context, Patient? value)
         {
-            if (values != null)
+            if (value != null)
             {
 
-                context.Patients.AddRange(values);
+                context.Patients.AddRange(value);
 
                 context.SaveChanges();
             }

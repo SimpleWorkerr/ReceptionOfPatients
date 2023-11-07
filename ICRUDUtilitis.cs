@@ -2,7 +2,7 @@
 {
     public interface ICRUDUtilitis<T>
     {
-        public void CreateRange(AppContext context, IEnumerable<T> values);
+        public void Create(AppContext context, T value);
         
         public void Update(AppContext context, T value);
         

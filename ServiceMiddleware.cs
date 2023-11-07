@@ -38,7 +38,7 @@ namespace ReceptionOfPatients
                     case "create":
 
 
-                        services.CreateRange(_appContext, await request.ReadFromJsonAsync<List<Service>>());
+                        services.Create(_appContext, await request.ReadFromJsonAsync<Service>());
 
                         break;
 
