@@ -34,6 +34,15 @@ namespace ReceptionOfPatients
 
                 switch (operation)
                 {
+                    case "read_page":
+
+                        response.ContentType = "text/html; charset=utf-8";
+                        await response.SendFileAsync("C:..\\ReceptionOfPatients\\wwwroot\\html\\patient.html");
+
+                        break;
+
+
+
                     case "create":
                         services.Create(_appContext, await request.ReadFromJsonAsync<Patient>());
                         break;
