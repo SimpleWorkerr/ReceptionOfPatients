@@ -35,6 +35,15 @@ namespace ReceptionOfPatients
 
                 switch (operation)
                 {
+
+                    case "read_page":
+
+                        response.ContentType = "text/html; charset=utf-8";
+                        await response.SendFileAsync("C:..\\ReceptionOfPatients\\wwwroot\\html\\current-appointments.html");
+
+                        break;
+
+
                     case "create":
 
 
