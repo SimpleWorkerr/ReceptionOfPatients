@@ -1,5 +1,6 @@
 ﻿using Azure.Core;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
@@ -41,8 +42,14 @@ namespace ReceptionOfPatients
 
                 switch (operation)
                 {
-                    case "create":
+                    case "read_page":
 
+                        response.ContentType = "text/html; charset=utf-8";
+                        await response.SendFileAsync("C:..\\ReceptionOfPatients\\wwwroot\\html\\doctor.html");
+
+                        break;
+
+                    case "create":
 
                         services.Create(_appContext, await request.ReadFromJsonAsync<Doctor>());
 
