@@ -57,82 +57,31 @@
 
     <!--=============================Заготовки для кнопок=====================-->
   <script>
-    async function getPatientsPage() {
-      const response = await fetch(`/patient?operation=read_page`, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-      });
-      if (response.ok === true) {
-        console.log(response.text());
-      }
-      else {
-        // если произошла ошибка, получаем сообщение об ошибке
-        const error = await response.json();
-        console.log(error.message); // и выводим его на консоль
-      }
-    }
-    async function getDoctorsPage() {
-      const response = await fetch(`/patient?operation=read_page`, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-      });
-      if (response.ok === true) {
-        console.log(response.text());
-      }
-      else {
-        // если произошла ошибка, получаем сообщение об ошибке
-        const error = await response.json();
-        console.log(error.message); // и выводим его на консоль
-      }
-    }
-    async function getReceptionPage() {
-      const response = await fetch(`/reception?operation=read_page`, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-      });
-      if (response.ok === true) {
-        console.log(response.text());
-      }
-      else {
-        // если произошла ошибка, получаем сообщение об ошибке
-        const error = await response.json();
-        console.log(error.message); // и выводим его на консоль
-      }
-    }
-    async function getReceptionRecPage() {
-      const response = await fetch(`/receptionResult?operation=read_page`, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-      });
-      if (response.ok === true) {
-        console.log(response.text());
-      }
-      else {
-        // если произошла ошибка, получаем сообщение об ошибке
-        const error = await response.json();
-        console.log(error.message); // и выводим его на консоль
-      }
-    }
-    async function getServicePage() {
-      const response = await fetch(`/service?operation=read_page`, {
-        method: "GET",
-        headers: { "Accept": "application/json" }
-      });
-      if (response.ok === true) {
-        console.log(response.text());
-      }
-      else {
-        // если произошла ошибка, получаем сообщение об ошибке
-        const error = await response.json();
-        console.log(error.message); // и выводим его на консоль
-      }
-    }
+    var doctorArg = "doctor"
+    var patientArg = "patient"
+    var receptionArg = "reception"
+    var receptionResArg = "receptionResult"
+    var servcieArg = "service"
 
-    getPatientsPage()
-    getDoctorsPage()
-    getReceptionPage()
-    getReceptionRecPage()
-    getServicePage()
+    async function getPage(objPage) {
+      const response = await fetch(`/${objPage}?operation=read_page`, {
+        method: "GET",
+        headers: { "Accept": "text/html" }
+      });
+      if (response.ok === true) {
+        console.log(response.text());
+      }
+      else {
+        // если произошла ошибка, получаем сообщение об ошибке
+        const error = await response.json();
+        console.log(error.message); // и выводим его на консоль
+      }
+    }
+    getPage(doctorArg);
+    getPage(patientArg);
+    getPage(receptionArg);
+    getPage(receptionResArg);
+    getPage(servcieArg);
   </script>
    <!--=============================Заготовки для кнопок=====================-->
 </body>
