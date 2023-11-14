@@ -66,10 +66,9 @@
     async function getPage(objPage) {
       const response = await fetch(`/${objPage}?operation=read_page`, {
         method: "GET",
-        headers: { "Accept": "text/html" }
       });
       if (response.ok === true) {
-        console.log(response.text());
+          console.log(response.body);
       }
       else {
         // если произошла ошибка, получаем сообщение об ошибке
