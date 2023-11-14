@@ -27,6 +27,14 @@ namespace ReceptionOfPatients
 
                 switch (operation)
                 {
+                    case "read_page":
+
+                        response.ContentType = "text/html; charset=utf-8";
+                        await response.SendFileAsync("C:..\\ReceptionOfPatients\\wwwroot\\html\\completed-appointments.html");
+
+                        break;
+
+
                     case "update":
 
                         services.Update(_appContext, await request.ReadFromJsonAsync<ReceptionResult>());
