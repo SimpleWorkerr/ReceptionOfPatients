@@ -1,11 +1,21 @@
-// Работа со списком услуг
+//Загрузка данных на страницу
+loadData();
 
-// Массив с услугами
-const services = [
-  "...",
-  "...",
-  "...",
-];
+function saveData() {
+  // Код для сохранения данных
+  hideModal();
+}
+
+//Функция получения данных с сервера при загрузке страницы
+//Тажке это main функция, для загрузки всех данных
+async function loadData(){
+  const response = await fetch("doctor?operation=read", {
+    method: "post",
+    headers: { "Accept": "application/json", "Content-Type": "application/json" }
+  });
+
+  console.log(response.json());
+}
 
 // Функция для добавления услуг в список
 function addServicesToList(services) {
@@ -15,11 +25,4 @@ function addServicesToList(services) {
     listItem.textContent = service;
     listElement.appendChild(listItem);
   });
-}
-
-addServicesToList(services);
-
-function saveData() {
-  // Код для сохранения данных
-  hideModal();
 }
