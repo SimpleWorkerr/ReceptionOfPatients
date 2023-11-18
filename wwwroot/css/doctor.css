@@ -26,12 +26,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 .content__menu {
   display: flex;
-  gap: 30px;
+  gap: 25px;
 }
 
 .content__menu-link {
@@ -101,12 +101,12 @@ body {
 .doctor-cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   justify-content: space-around;
 }
 
 .doctor-card {
-  flex-basis: calc(50% - 10px);
+  flex-basis: calc(50% - 5px);
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -114,7 +114,6 @@ body {
   border: 1px solid var(--primary-light-color);
   border-radius: 8px;
   padding: 20px;
-  /* margin-bottom: 20px; */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -238,7 +237,7 @@ body {
     padding: 8px 16px;
   }
 
-  .content__title {   
+  .content__title {
     font-size: 25px;
   }
 }
