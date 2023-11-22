@@ -16,8 +16,9 @@ async function loadData() {
         headers: { "Accept": "application/json", "Content-Type": "application/json" }
     });
 
-    if (response.status == 200) {
+    if (responseDoctors.status == 200) {
         let doctors_cards = document.getElementById("doctor-cards-id");
+        doctors_cards.innerHTML = "";
         const data = await responseDoctors.json();
 
         //Добавление карточек
@@ -39,11 +40,10 @@ async function loadData() {
                                                 ${serviceList}
                                             </div>
                                             <div class="doctor-card__actions">
-                                                <button class="doctor-card__button doctor-card__button--edit">Изменить</button>
-                                                <button class="doctor-card__button doctor-card__button--delete">Удалить</button>
+                                                <button class="doctor-card__button doctor-card__button--edit id=change-doctors-btn_${i}">Изменить</button>
+                                                <button class="doctor-card__button doctor-card__button--delete id=delete-doctors-btn_${i}">Удалить</button>
                                             </div>
                                         </div>`
-
         }
     }
 }
