@@ -10,8 +10,17 @@ namespace ReceptionOfPatients
         {
             if (value != null)
             {
+                Doctor tempDoc = new Doctor()
+                {
+                    Name = value.Name,
+                    FatherName = value.FatherName,
+                    Surname = value.Surname,
+                    StartWorkDate = value.StartWorkDate,
+                    OfficeNumber = value.OfficeNumber,
+                    Specialization = value.Specialization
+                };
 
-                context.Doctors.AddRange(value);
+                context.Doctors.Add(tempDoc);
 
                 context.SaveChanges();
             }
@@ -35,7 +44,13 @@ namespace ReceptionOfPatients
 
             if (value != null)
             {
-                context.Doctors.Update(value);
+                Doctor dbDoctor = context.Doctors.First(doc => doc.Id == value.Id);
+
+                dbDoctor.Name = value.Name;
+                dbDoctor.Surname = value.Surname;
+                dbDoctor.FatherName = value.FatherName;
+                dbDoctor.OfficeNumber = value.OfficeNumber;
+                dbDoctor.StartWorkDate = value.StartWorkDate;
 
                 context.SaveChanges();
             }

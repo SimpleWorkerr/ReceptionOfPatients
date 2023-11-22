@@ -1,5 +1,5 @@
 //Общая переменная
-let responseDoctors;
+let doctors;
 //Загрузка данных на страницу
 loadData();
 
@@ -19,31 +19,79 @@ async function loadData() {
     if (responseDoctors.status == 200) {
         let doctors_cards = document.getElementById("doctor-cards-id");
         doctors_cards.innerHTML = "";
-        const data = await responseDoctors.json();
+        doctors = await responseDoctors.json();
 
         //Добавление карточек
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < doctors.length; i++) {
 
             let serviceList = '<ul class="doctor-card__services">'
-            for (let j = 0; j < data[i].Services.length; j++) {
-                serviceList += `<li class="doctor-card__service">${data[i].Services[j].ServiceName}</li>`
+            for (let j = 0; j < doctors[i].Services.length; j++) {
+                serviceList += `<li class="doctor-card__service">${doctors[i].Services[j].ServiceName}</li>`
             }
             serviceList += '</ul>'
             //Хардкод
             doctors_cards.innerHTML += `<div class="doctor-card">
                                             <div class="doctor-card__info">
-                                                <h3 class="doctor-card__name">${data[i].Surname} ${data[i].Name} ${data[i].FatherName}</h3>
-                                                <p class="doctor-card__detail">Кабинет: ${data[i].OfficeNumber}</p>
-                                                <p class="doctor-card__detail">Начало работы: ${data[i].StartWorkDate}</p>
-                                                <p class="doctor-card__detail">Специализация: ${data[i].Specialization}</p>
+                                                <h3 class="doctor-card__name">${doctors[i].Surname} ${doctors[i].Name} ${doctors[i].FatherName}</h3>
+                                                <p class="doctor-card__detail">Кабинет: ${doctors[i].OfficeNumber}</p>
+                                                <p class="doctor-card__detail">Начало работы: ${doctors[i].StartWorkDate}</p>
+                                                <p class="doctor-card__detail">Специализация: ${doctors[i].Specialization}</p>
                                                 <h4 class="doctor-card__services-title">Услуги:</h4>
                                                 ${serviceList}
                                             </div>
                                             <div class="doctor-card__actions">
-                                                <button class="doctor-card__button doctor-card__button--edit id=change-doctors-btn_${i}">Изменить</button>
-                                                <button class="doctor-card__button doctor-card__button--delete id=delete-doctors-btn_${i}">Удалить</button>
+                                                <button onclick="changeDoctor(${i});" class="doctor-card__button doctor-card__button--edit">Изменить</button>
+                                                <button onclick="deleteDoctor(${i});" class="doctor-card__button doctor-card__button--delete">Удалить</button>
                                             </div>
                                         </div>`
         }
     }
+}
+//Функция изменения доктора
+function changeDoctor(index) {
+    doctor = doctors[index]
+    console.log(JSON.stringify(doctor));
+
+    //Тут реализовать работу с изменением
+
+    doctor.Name = doctor.Name + "Amogus";
+    let url = '/doctor?operation=update';
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(doctor)
+    })
+        .then(response => console.log(response));
+}
+
+//Функция удаления доктора
+function deleteDoctor(index) {
+    doctor = doctors[index]
+    let url = '/doctor?operation=delete';
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(doctor.Id)
+    })
+        .then(response => console.log(response));
+}
+
+//Функция добавления доктора
+function addDoctor() {
+    //Копирование первого доктора
+    //Сделать формочку для ввода доктора
+    doctor = doctors[0]
+    let url = '/doctor?operation=create';
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(doctor)
+    })
+        .then(response => console.log(response));
 }
