@@ -40,8 +40,11 @@ async function loadData() {
                                                 ${serviceList}
                                             </div>
                                             <div class="doctor-card__actions">
+
+                                                <button onclick="readDoctorPatient(${i});" class="doctor-card__button doctor-card__button--patients">Пациенты</button>
                                                 <button onclick="changeDoctor(${i});" class="doctor-card__button doctor-card__button--edit">Изменить</button>
                                                 <button onclick="deleteDoctor(${i});" class="doctor-card__button doctor-card__button--delete">Удалить</button>
+
                                             </div>
                                         </div>`
         }
@@ -53,8 +56,8 @@ function changeDoctor(index) {
     console.log(JSON.stringify(doctor));
 
     //Тут реализовать работу с изменением
-
     doctor.Name = doctor.Name + "Amogus";
+
     let url = '/doctor?operation=update';
     fetch(url, {
         method: 'POST',
@@ -94,4 +97,19 @@ function addDoctor() {
         body: JSON.stringify(doctor)
     })
         .then(response => console.log(response));
+}
+
+//Функция получения пациентов
+function readDoctorPatient(index) {
+    doctor = doctors[index]
+    // let url = '/doctor?operation=read_patients';
+
+    // let responsePatients = fetch(url, {
+    //     method: 'POST',
+    //     headers: { "Accept": "application/json", "Content-Type": "application/json" },
+    //     body: JSON.stringify(doctor.Id)
+    // });
+    // let patients = responsePatients.json()
+
+    console.log(JSON.stringify(doctor.Patients));
 }

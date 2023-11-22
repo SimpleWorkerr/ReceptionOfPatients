@@ -1,14 +1,15 @@
 :root {
-  --primary-color: #5687c0;
-  --primary-light-color: #c7dcf1;
-  --primary-dark-color: #275392;
-  --button-edit-color: #75b9b5;
-  --button-delete-color: #dc6d6d;
-  --secondary-color: #afeeeb;
-  --secondary-dark-color: #75b9b5;
-  --text-dark-color: #161717;
-  --text-light-color: #f4f5f8;
-  --background-color: #f5f5f5;
+    --primary-color: #5687c0;
+    --primary-light-color: #c7dcf1;
+    --primary-dark-color: #275392;
+    --button-edit-color: #75b9b5;
+    --button-delete-color: #dc6d6d;
+    --button-patients-color: #59d82e;
+    --secondary-color: #afeeeb;
+    --secondary-dark-color: #75b9b5;
+    --text-dark-color: #161717;
+    --text-light-color: #f4f5f8;
+    --background-color: #f5f5f5;
 }
 
 body {
@@ -172,8 +173,12 @@ body {
   background-color: var(--button-delete-color);
 }
 
+.doctor-card__button--patients {
+    background-color: var( --button-patients-color);
+}
+
 .doctor-card__button:hover {
-  filter: brightness(93%);
+    filter: brightness(93%);
 }
 
 .footer {
