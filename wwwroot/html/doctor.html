@@ -18,20 +18,24 @@
 <body>
     <script defer src="../js/modal-window.js"></script>
     <script defer src="../js/app-doctor.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
     <div class="content">
 
         <div class="content__header">
-            <h1 class="content__title"><a class="content__title--link" href="../index.html">Reception of patients</a></h1>
+            <h1 class="content__title">
+                <a class="content__title--link" href="../index.html">Reception of patients</a>
+            </h1>
             <nav class="content__menu">
                 <nav class="content__menu">
                     <a href="#" class="content__menu-link">Главная</a>
                     <a href="#" class="content__menu-link">Описание проекта</a>
                     <a href="#" class="content__menu-link">Ссылка на GitHub</a>
                 </nav>
-                
+
             </nav>
         </div>
-        
+
         <header class="header">
             <div class="header__block header__block--doctors">
                 <h2 class="header__title">Доктора:</h2>
@@ -41,41 +45,43 @@
                     <option value="all">Все специализации</option>
                     <option value="therapist">Терапевт</option>
                     <option value="surgeon">Хирург</option>
-                    <!-- Добавьте другие специализации здесь -->
                 </select>
             </div>
         </header>
 
-
         <main class="main">
             <section class="doctor-cards" id="doctor-cards-id">
-               Данные добавляются динамически через js
+                Загрузка ...
             </section>
         </main>
 
         <footer class="footer">
             <button class="footer__button footer__button--add" onclick="showModal()">
-                +
-            </button>
-            <button class="footer__button footer__button--save">
-                Сохранить
+                Добавить доктора
             </button>
         </footer>
 
         <!-- Модальное окно -->
         <div class="modal" id="modal">
+            <h2 class="modal__title">
+                Внесите информацию о докторе:</h2>
             <input type="text" placeholder="ФИО" id="name">
             <input type="text" placeholder="Номер кабинета" id="room">
             <input type="text" placeholder="Начало работы" id="workStart">
             <input type="text" placeholder="Специализация" id="specialization">
             <input type="text" placeholder="Список услуг" id="services">
             <div class="modal__buttons">
-                <!--<button class="modal__buttons--saveData" onclick="saveData()">Сохранить</button>-->
-
-                <!-- Добавление первого доктора в блоках хардкодом -->
                 <button class="modal__buttons--saveData" onclick="addDoctor()">Сохранить</button>
-
                 <button class="modal__buttons--hideModal" onclick="hideModal()">Отменить</button>
+            </div>
+        </div>
+
+        <!-- Модальное окно для пациентов -->
+        <div class="modal" id="patientsModal">
+            <h2 class="modal__title">Пациенты доктора</h2>
+            <div id="patientsList" class="modal__content"></div>
+            <div class="modal__buttons">
+                <button class="modal__buttons--hideModal" onclick="hidePatientsModal()">Закрыть</button>
             </div>
         </div>
 

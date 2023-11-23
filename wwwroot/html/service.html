@@ -20,42 +20,49 @@
 <body>
     <script defer src="../js/modal-window.js"></script>
     <script defer src="../js/app-service.js"></script>
+
     <div class="content">
 
-        <h1 class="content__title"><a class="content__title--link" href="../index.html">Reception of patients</a></h1>
+        <div class="content__header">
+            <h1 class="content__title">
+                <a class="content__title--link" href="../index.html">Reception of patients</a>
+            </h1>
+            <nav class="content__menu">
+                <nav class="content__menu">
+                    <a href="#" class="content__menu-link">Главная</a>
+                    <a href="#" class="content__menu-link">Описание проекта</a>
+                    <a href="#" class="content__menu-link">Ссылка на GitHub</a>
+                </nav>
+
+            </nav>
+        </div>
 
         <header class="header">
-            <div class="header__block header__block--doctors">
-                <h2 class="header__title">Услуги</h2>
-            </div>
-            <div class="header__block header__block--filters">
-                <h2 class="header__title">Фильтры</h2>
+            <div class="header__block header__block--services">
+                <h2 class="header__title">Услуги:</h2>
             </div>
         </header>
 
         <main class="main">
-            <div class="main__articles">
-                <article class="article">
-                    <h2 class="article__title">Название</h2>
-                </article>
-                <article class="article">
-                    <h2 class="article__title">Цена</h2>
-                </article>
-            </div>
-            <div class="main__sidebar">
-                <button class="main__button">Изменить</button>
-                <button class="main__button">Удалить</button>
-                <button class="main__button"> <a href="../html/doctor.html">Доктора</a></button>
-                <button class="main__button"> <a href="../html/patient.html">Пациенты</a></button>
-            </div>
+            <section class="service-cards" id="service-cards-id">
+                <div class="service-card">
+                    <div class="service-card__info">
+                        <h3 class="service-card__name">Услуга 1</h3>
+                        <p class="service-card__detail">Цена: 2000 руб.</p>
+                    </div>
+                    <div class="service-card__actions">
+                        <button onclick="" class="service-card__button service-card__button--doctors">Доктора</button>
+                        <button onclick="" class="service-card__button service-card__button--patients">Пациенты</button>
+                        <button onclick="" class=" service-card__button service-card__button--edit">Изменить</button>
+                        <button onclick="" class="service-card__button service-card__button--delete">Удалить</button>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <footer class="footer">
             <button class="footer__button footer__button--add" onclick="showModal()">
-                +
-            </button>
-            <button class="footer__button footer__button--save">
-                Сохранить
+                Добавить услугу
             </button>
         </footer>
 

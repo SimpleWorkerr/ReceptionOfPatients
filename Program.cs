@@ -7,6 +7,9 @@
         {
             using (AppContext appContext = new AppContext())
             {
+
+                AddData();
+
                 var builder = WebApplication.CreateBuilder(args);
                 builder.Services.AddTransient<CrudDoctorServices>();
                 builder.Services.AddTransient<CrudPatientServices>();

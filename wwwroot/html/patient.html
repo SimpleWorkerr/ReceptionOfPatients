@@ -22,45 +22,47 @@
     <script defer src="../js/app-patient.js"></script>
     <div class="content">
 
-        <h1 class="content__title"><a class="content__title--link" href="../index.html">Reception of patients</a></h1>
+        <div class="content__header">
+            <h1 class="content__title">
+                <a class="content__title--link" href="../index.html">Reception of patients</a>
+            </h1>
+            <nav class="content__menu">
+                <nav class="content__menu">
+                    <a href="#" class="content__menu-link">Главная</a>
+                    <a href="#" class="content__menu-link">Описание проекта</a>
+                    <a href="#" class="content__menu-link">Ссылка на GitHub</a>
+                </nav>
+
+            </nav>
+        </div>
 
         <header class="header">
-            <div class="header__block header__block--doctors">
-                <h2 class="header__title">Пациенты</h2>
-            </div>
-            <div class="header__block header__block--filters">
-                <h2 class="header__title">Фильтры</h2>
+            <div class="header__block header__block--patients">
+                <h2 class="header__title">Пациенты:</h2>
             </div>
         </header>
 
         <main class="main">
-            <div class="main__articles">
-                <article class="article">
-                    <h2 class="article__title">ФИО</h2>
-                </article>
-                <article class="article">
-                    <h2 class="article__title">Адрес</h2>
-                </article>
-                <article class="article">
-                    <h2 class="article__title">Номер телефона</h2>
-                </article>
-                <article class="article">
-                    <h2 class="article__title">Дата рождения</h2>
-                </article>
-            </div>
-            <div class="main__sidebar">
-                <button class="main__button">Изменить</button>
-                <button class="main__button">Удалить</button>
-                <button class="main__button"> <a href="../html/doctor.html">Доктора</a></button>
-            </div>
+            <section class="patient-cards" id="patient-cards-id">
+                <div class="patient-card">
+                    <div class="patient-card__info">
+                        <h3 class="patient-card__name">Иванов Роман Николевич</h3>
+                        <p class="patient-card__detail">Адрес: Пушкина 23а</p>
+                        <p class="patient-card__detail">Номер телефона: +79843467895</p>
+                        <p class="patient-card__detail">Дата рождения: 23.06.1990</p>
+                    </div>
+                    <div class="patient-card__actions">
+                        <button onclick="" class="patient-card__button patient-card__button--doctors">Доктора</button>
+                        <button onclick="" class="patient-card__button patient-card__button--edit">Изменить</button>
+                        <button onclick="" class="patient-card__button patient-card__button--delete">Удалить</button>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <footer class="footer">
             <button class="footer__button footer__button--add" onclick="showModal()">
-                +
-            </button>
-            <button class="footer__button footer__button--save">
-                Сохранить
+                Добавить пациента
             </button>
         </footer>
 
