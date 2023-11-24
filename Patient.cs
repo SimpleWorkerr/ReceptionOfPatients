@@ -20,7 +20,7 @@ namespace ReceptionOfPatients
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine($"Пациент: {Surname} {Name} {FatherName ?? "Нет отчества"}");
+            stringBuilder.AppendLine($"Пациент: {Surname} {Name} {FatherName ?? "Нет отчества"} Id: {Id}");
             stringBuilder.AppendLine($"\tАдресс: {Address}");
             stringBuilder.AppendLine($"\tНомер телефона: {PhoneNumber}");
             stringBuilder.AppendLine($"\tДата рождения: {BirthDate.ToString()}");

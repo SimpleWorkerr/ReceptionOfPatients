@@ -1,7 +1,7 @@
 //Общая переменная
 let doctors;
 //Загрузка данных на страницу
-loadData();
+loadDataDoctors();
 
 function saveData() {
   // Код для сохранения данных
@@ -10,7 +10,7 @@ function saveData() {
 
 //Функция получения данных с сервера при загрузке страницы
 //Тажке это main функция, для загрузки всех данных
-async function loadData() {
+async function loadDataDoctors() {
   responseDoctors = await fetch("doctor?operation=read", {
     method: "post",
     headers: { Accept: "application/json", "Content-Type": "application/json" },
@@ -92,7 +92,7 @@ async function deleteDoctor(index) {
     });
 
     if (response.ok) {
-      loadData();
+      loadDataDoctors();
     } else {
       throw new Error("Ошибка удаления доктора");
     }
@@ -102,100 +102,103 @@ async function deleteDoctor(index) {
   }
 }
 
-// // Функция добавления доктора
-// async function addDoctor() {
-//   // Получение данных из формы
-//   const name = document.getElementById("name").value;
-//   const room = document.getElementById("room").value;
-//   const workStart = document.getElementById("workStart").value;
-//   const specialization = document.getElementById("specialization").value;
-//   const services = document.getElementById("services").value; // Предполагается, что это строка
+// Функция добавления доктора
+async function addDoctor() {
+  // Получение данных из формы
+  const name = document.getElementById("name").value;
+  const room = document.getElementById("room").value;
+  const workStart = document.getElementById("workStart").value;
+  const specialization = document.getElementById("specialization").value;
+  const services = document.getElementById("services").value; // Предполагается, что это строка
 
-//   // Создание объекта доктора
-//   const newDoctor = {
-//     Name: name,
-//     OfficeNumber: room,
-//     StartWorkDate: workStart,
-//     Specialization: specialization,
-//     Services: services
-//       .split(",")
-//       .map((service) => ({ ServiceName: service.trim() })), // Разбиваем строку услуг на массив
-//   };
+  // Создание объекта доктора
+  const newDoctor = {
+    Name: name,
+    OfficeNumber: room,
+    StartWorkDate: workStart,
+    Specialization: specialization,
+    Services: services
+      .split(",")
+      .map((service) => ({ ServiceName: service.trim() })), // Разбиваем строку услуг на массив
+  };
 
-//   // Отправка данных на сервер
-//   try {
-//     const response = await fetch("/doctor?operation=create", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(newDoctor),
-//     });
+  // Отправка данных на сервер
+  try {
+    const response = await fetch("/doctor?operation=create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newDoctor),
+    });
 
-//     if (response.ok) {
-//       // Обновление данных на странице
-//       await loadData();
-//       hideModal();
-//     } else {
-//       throw new Error("Ошибка добавления доктора");
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     alert("Произошла ошибка при добавлении доктора");
-//   }
-// }
+    if (response.ok) {
+      // Обновление данных на странице
+      await loadDataDoctors();
+      hideModal();
+    } else {
+      throw new Error("Ошибка добавления доктора");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Произошла ошибка при добавлении доктора");
+  }
+}
 
-// // Функция получения пациентов и отображения их в модальном окне
-// async function readDoctorPatient(index) {
-//   const doctor = doctors[index];
-//   const url = "/doctor?operation=read_patients";
+// Функция получения пациентов и отображения их в модальном окне
+async function readDoctorPatient(index) {
+  const doctor = doctors[index];
+  const url = "/doctor?operation=read_patients";
 
-//   try {
-//     const response = await fetch(url, {
-//       method: "POST",
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({ doctorId: doctor.Id }),
-//     });
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(doctor.Id),
+    });
 
-//     if (response.ok) {
-//       const patients = await response.json();
-//       displayPatientsModal(patients);
-//     } else {
-//       throw new Error("Ошибка получения данных о пациентах");
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     alert("Произошла ошибка при получении данных о пациентах");
-//   }
-// }
+    if (response.ok) {
+      const patients = await response.json();
 
-// // Функция для отображения модального окна с пациентами
-// function displayPatientsModal(patients) {
-//   // Создание содержимого модального окна
-//   let modalContent =
-//     "<table><tr><th>ID</th><th>Имя</th><th>Фамилия</th><th>Отчество</th><th>Дата рождения</th><th>Адрес</th><th>Телефон</th></tr>";
-//   patients.forEach((patient) => {
-//     modalContent += `<tr>
-//                        <td>${patient.Id}</td>
-//                        <td>${patient.Name}</td>
-//                        <td>${patient.Surname}</td>
-//                        <td>${patient.FatherName}</td>
-//                        <td>${patient.BirthDate}</td>
-//                        <td>${patient.Address}</td>
-//                        <td>${patient.PhoneNumber}</td>
-//                      </tr>`;
-//   });
-//   modalContent += "</table>";
+      console.log(JSON.stringify(patients));
 
-//   const modal = document.getElementById("patientsModal");
-//   modal.innerHTML = modalContent;
-//   modal.style.display = "block";
-// }
+      displayPatientsModal(patients);
+    } else {
+      throw new Error("Ошибка получения данных о пациентах");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Произошла ошибка при получении данных о пациентах");
+  }
+}
 
-// function hidePatientsModal() {
-//   const modal = document.getElementById("patientsModal");
-//   modal.style.display = "none";
-// }
+// Функция для отображения модального окна с пациентами
+function displayPatientsModal(patients) {
+  // Создание содержимого модального окна
+  let modalContent =
+    "<table><tr><th>ID</th><th>Имя</th><th>Фамилия</th><th>Отчество</th><th>Дата рождения</th><th>Адрес</th><th>Телефон</th></tr>";
+  patients.forEach((patient) => {
+    modalContent += `<tr>
+                       <td>${patient.Id}</td>
+                       <td>${patient.Name}</td>
+                       <td>${patient.Surname}</td>
+                       <td>${patient.FatherName}</td>
+                       <td>${patient.BirthDate}</td>
+                       <td>${patient.Address}</td>
+                       <td>${patient.PhoneNumber}</td>
+                     </tr>`;
+  });
+  modalContent += "</table>";
+
+  const modal = document.getElementById("patientsModal");
+  modal.innerHTML = modalContent;
+  modal.style.display = "block";
+}
+
+function hidePatientsModal() {
+  const modal = document.getElementById("patientsModal");
+  modal.style.display = "none";
+}

@@ -8,7 +8,6 @@ namespace ReceptionOfPatients
         {
             if (value != null)
             {
-
                 context.Patients.AddRange(value);
 
                 context.SaveChanges();
@@ -17,8 +16,6 @@ namespace ReceptionOfPatients
 
         public void Delete(AppContext context, int index)
         {
-
-
             context.Patients.Remove(context.Patients.First(pat => pat.Id == index));
 
             context.SaveChanges();
@@ -36,7 +33,15 @@ namespace ReceptionOfPatients
         {
             if (value != null)
             {
-                context.Patients.UpdateRange(value);
+                Patient dbPatient = context.Patients.First(pat => pat.Id == value.Id);
+
+                dbPatient.Name = value.Name;
+                dbPatient.Surname = value.Surname;
+                dbPatient.FatherName = value.FatherName;
+                dbPatient.Address = value.Address;
+                dbPatient.PhoneNumber = value.PhoneNumber;
+                dbPatient.BirthDate = value.BirthDate;
+
                 context.SaveChanges();
 
             }

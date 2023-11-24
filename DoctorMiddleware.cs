@@ -75,7 +75,14 @@ namespace ReceptionOfPatients
 
                     case "read_patients":
 
-                        await response.WriteAsJsonAsync(services.GetPatients(_appContext, await request.ReadFromJsonAsync<int>()), options);
+                        List<Patient> patients = services.GetPatients(_appContext, await request.ReadFromJsonAsync<int>());
+
+                        foreach (var patient in patients)
+                        {
+                            Console.WriteLine(patient.Name);
+                        }
+
+                        await response.WriteAsJsonAsync(patients, options);
 
                         break;
                         

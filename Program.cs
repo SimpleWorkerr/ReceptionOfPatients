@@ -8,7 +8,7 @@
             using (AppContext appContext = new AppContext())
             {
 
-                AddData();
+                //AddData();
 
                 var builder = WebApplication.CreateBuilder(args);
                 builder.Services.AddTransient<CrudDoctorServices>();
@@ -20,8 +20,8 @@
 
                 var app = builder.Build();
                 app.UseStaticFiles();
-                //doctor?operation=read
 
+                //doctor?operation=read
                 app.UseMiddleware<DoctorMiddleware>(appContext);
                 //patient?operation=read
                 app.UseMiddleware<PatientMiddleware>(appContext);
