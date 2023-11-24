@@ -23,41 +23,95 @@ async function loadDataDoctors() {
 
     //Добавление карточек
     for (let i = 0; i < doctors.length; i++) {
-      let serviceList = '<ul class="doctor-card__services">';
-      for (let j = 0; j < doctors[i].Services.length; j++) {
-        serviceList += `<li class="doctor-card__service">${doctors[i].Services[j].ServiceName}</li>`;
-      }
-      serviceList += "</ul>";
-
-      // Форматирование даты с помощью Moment.js
-      const formattedDate = moment(doctors[i].StartWorkDate).format(
-        "YYYY-MM-DD HH:mm:ss"
-      );
-
-      //Хардкод
-      doctors_cards.innerHTML += `<div class="doctor-card">
-                                            <div class="doctor-card__info">
-                                                <h3 class="doctor-card__name">${doctors[i].Surname} ${doctors[i].Name} ${doctors[i].FatherName}</h3>
-                                                <p class="doctor-card__detail">Кабинет: ${doctors[i].OfficeNumber}</p>
-                                                <p class="doctor-card__detail">Начало работы: ${formattedDate}</p>
-                                                <p class="doctor-card__detail">Специализация: ${doctors[i].Specialization}</p>
-                                                <h4 class="doctor-card__services-title">Услуги:</h4>
-                                                ${serviceList}
-                                            </div>
-                                            <div class="doctor-card__actions">
-
-                                                <button onclick="readDoctorPatient(${i});" class="doctor-card__button doctor-card__button--patients">Пациенты</button>
-                                                <button onclick="changeDoctor(${i});" class="doctor-card__button doctor-card__button--edit">Изменить</button>
-                                                <button onclick="deleteDoctor(${i});" class="doctor-card__button doctor-card__button--delete">Удалить</button>
-
-                                            </div>
-                                        </div>`;
+      doctors_cards.appendChild(createDoctorCardElement(doctors[i]));
     }
   }
 }
+//Функция для создания карточек докторов
+function createDoctorCardElement(doctor) {
+  //Создаём блок карточки
+  const card = document.createElement("div");
+  card.className = "doctor-card";
+
+  //Блок с информацией о докторе
+  const cardInfo = document.createElement("div");
+  cardInfo.className = "doctor-card__info";
+  //ФИО доктора
+  const doctorName = document.createElement("h3");
+  doctorName.className = "doctor-card__name";
+  doctorName.textContent = `${doctor.Surname} ${doctor.Name} ${doctor.FatherName}`;
+  //Кабинет доктора
+  const doctorOffice = document.createElement("p");
+  doctorOffice.className = "doctor-card__detail";
+  doctorOffice.textContent = `${doctor.OfficeNumber}`;
+  //Дата начала работы доктора
+  //const formattedDate = moment(doctor.StartWorkDate).format("MMM Do YY");
+  const doctorStartWorkDate = document.createElement("p");
+  doctorStartWorkDate.className = "doctor-card__detail";
+  doctorStartWorkDate.textContent = `${doctor.StartWorkDate}`;
+  //Специализация доктора
+  const doctorSpecialization = document.createElement("p");
+  doctorSpecialization.className = "doctor-card__detail";
+  doctorSpecialization.textContent = `${doctor.Specialization}`;
+  //Список услуг доктора
+  const doctorServices = createListDoctorServices(doctor);
+
+  //Создаём блок с кнопками на карточке
+  const cardDoctorsActions = document.createElement("div");
+  cardDoctorsActions.className = "doctor-card__actions"
+  //Кнопка отображения докторов, текущего пациента
+  const doctorPatientsBtn = document.createElement("button");
+  doctorPatientsBtn.addEventListener("click", () => readPatientDoctors(doctor));
+  doctorPatientsBtn.className = "doctor-card__button doctor-card__button--patients";
+  doctorPatientsBtn.innerText = "Пациенты";
+  //Кнопка изменения данных о докторе
+  const doctorChangeBtn = document.createElement("button");
+  doctorChangeBtn.addEventListener("click", () => changeDoctor(doctor));
+  doctorChangeBtn.className = "doctor-card__button doctor-card__button--edit";
+  doctorChangeBtn.innerText = "Изменить";
+  //Кнопка удаления доктора
+  const doctorRemovesBtn = document.createElement("button");
+  doctorRemovesBtn.addEventListener("click", () => deleteDoctor(doctor));
+  doctorRemovesBtn.className = "doctor-card__button doctor-card__button--delete";
+  doctorRemovesBtn.innerText = "Удалить";
+
+  //Собираем карточку полностью
+  card.appendChild(cardInfo);
+  card.appendChild(cardDoctorsActions);
+
+  //Собиравем блок с кнопками
+  cardDoctorsActions.appendChild(doctorPatientsBtn);
+  cardDoctorsActions.appendChild(doctorChangeBtn);
+  cardDoctorsActions.appendChild(doctorRemovesBtn);
+
+  //Собираем блок информации о пациенте
+  cardInfo.appendChild(doctorName);
+  cardInfo.appendChild(doctorOffice);
+  cardInfo.appendChild(doctorStartWorkDate);
+  cardInfo.appendChild(doctorSpecialization);
+  cardInfo.appendChild(doctorServices);
+
+  return card;
+}
+//Функция создания списка услуг
+function createListDoctorServices(doctor) {
+  const servicesList = document.createElement("ul");
+
+  servicesList.className = "doctor-card__services";
+
+  for (let i = 0; i < doctor.Services.length; i++) {
+    const listPart = document.createElement("li");
+
+    listPart.className = "doctor-card__service";
+    listPart.textContent = `${doctor.Services[i].ServiceName}`
+    servicesList.appendChild(listPart);
+  }
+
+  return servicesList;
+}
+
 //Функция изменения доктора
-function changeDoctor(index) {
-  doctor = doctors[index];
+function changeDoctor(doctor) {
   console.log(JSON.stringify(doctor));
 
   //Тут реализовать работу с изменением
@@ -74,8 +128,7 @@ function changeDoctor(index) {
 }
 
 // Функция удаления доктора
-async function deleteDoctor(index) {
-  const doctor = doctors[index];
+async function deleteDoctor(doctor) {
   const url = "/doctor?operation=delete";
   const confirmation = confirm("Вы уверены, что хотите удалить доктора?");
   if (!confirmation) {
@@ -146,8 +199,7 @@ async function addDoctor() {
 }
 
 // Функция получения пациентов и отображения их в модальном окне
-async function readDoctorPatient(index) {
-  const doctor = doctors[index];
+async function readDoctorPatient(doctor) {
   const url = "/doctor?operation=read_patients";
 
   try {
