@@ -36,9 +36,12 @@ namespace ReceptionOfPatients
         {
             if (value != null)
             {
-                context.Services.Update(value);
-                context.SaveChanges();
+                Service dbService = context.Services.First(ser => ser.Id == value.Id);
 
+                dbService.ServiceName = value.ServiceName;
+                dbService.Price = value.Price;
+
+                context.SaveChanges();
             }
         }
 
