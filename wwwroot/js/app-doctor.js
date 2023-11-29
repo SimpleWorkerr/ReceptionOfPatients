@@ -61,7 +61,7 @@ function createDoctorCardElement(doctor) {
   cardDoctorsActions.className = "doctor-card__actions"
   //Кнопка отображения докторов, текущего пациента
   const doctorPatientsBtn = document.createElement("button");
-  doctorPatientsBtn.addEventListener("click", () => readPatientDoctors(doctor));
+  doctorPatientsBtn.addEventListener("click", () => readDoctorPatients(doctor));
   doctorPatientsBtn.className = "doctor-card__button doctor-card__button--patients";
   doctorPatientsBtn.innerText = "Пациенты";
   //Кнопка изменения данных о докторе
@@ -199,7 +199,7 @@ async function addDoctor() {
 }
 
 // Функция получения пациентов и отображения их в модальном окне
-async function readDoctorPatient(doctor) {
+async function readDoctorPatients(doctor) {
   const url = "/doctor?operation=read_patients";
 
   try {
