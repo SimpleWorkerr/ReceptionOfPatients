@@ -124,7 +124,7 @@ async function readServicePatients(service) {
     if (responseServicePatients.ok) {
       const patients = await responseServicePatients.json();
 
-      console.log(patients);
+        displayPatientsModal(service, patients);
 
     } else {
       throw new Error("Ошибка получения данных о пациентах");
@@ -134,7 +134,9 @@ async function readServicePatients(service) {
     alert("Произошла ошибка при получении данных о пациентах");
   }
 }
-//Функция отображающая докторов, которые оказывают текущую услугу.
+
+
+//Функция отображающая пациентов, которым оказывают текущую услугу.
 async function readServiceDoctors(service) {
   const url = "/service?operation=read_doctors";
 
@@ -151,7 +153,7 @@ async function readServiceDoctors(service) {
     if (responseServiceDoctors.ok) {
       const doctors = await responseServiceDoctors.json();
 
-      console.log(doctors);
+        displayDoctorsModal(service, doctors);
 
     } else {
       throw new Error("Ошибка получения данных о пациентах");
@@ -161,4 +163,217 @@ async function readServiceDoctors(service) {
     alert("Произошла ошибка при получении данных о пациентах");
   }
 }
+function displayPatientsModal(service, patients) {
+    //Создание ссылки на html элемент
+    const modal = document.getElementById("servicePatientsModal");
+    //Затирание предыдущего содержимого окна пациентов определённого доктора
+    modal.innerHTML = "";
+
+    //Создание заголовка модального окна
+    let modalContextHeader = document.createElement("h2");
+    modalContextHeader.className = "modal__title";
+    modalContextHeader.textContent = `Пациенты, которым оказывают: ${service.ServiceName}`;
+
+    // Создание таблицы модального окна
+    let modalContentTable = document.createElement("table");
+
+    //Создание заголовков таблицы
+    let rowOfContextTableHeaders = document.createElement("tr");
+
+    let patientNameHeader = document.createElement("th");
+    patientNameHeader.textContent = `Имя`;
+
+    let patientSurnameHeader = document.createElement("th");
+    patientSurnameHeader.textContent = `Фамилия`;
+
+    let patientFatherNameHeader = document.createElement("th");
+    patientFatherNameHeader.textContent = `Отчество`;
+
+    let patientBirthDateHeader = document.createElement("th");
+    patientBirthDateHeader.textContent = `Дата рождения`;
+
+    let patientAddressHeader = document.createElement("th");
+    patientAddressHeader.textContent = `Адрес`;
+
+    let patientPhoneNumberHeader = document.createElement("th");
+    patientPhoneNumberHeader.textContent = `Телефон`;
+
+    rowOfContextTableHeaders.appendChild(patientNameHeader);
+    rowOfContextTableHeaders.appendChild(patientSurnameHeader);
+    rowOfContextTableHeaders.appendChild(patientFatherNameHeader);
+    rowOfContextTableHeaders.appendChild(patientBirthDateHeader);
+    rowOfContextTableHeaders.appendChild(patientAddressHeader);
+    rowOfContextTableHeaders.appendChild(patientPhoneNumberHeader);
+
+    //Собираем таблицу
+    modal.appendChild(modalContextHeader);
+    modal.appendChild(rowOfContextTableHeaders);
+
+    //Создание данных внутри таблицы
+    patients.forEach((patient) => {
+        modalContentTable.appendChild(createTableRow(patient));
+    });
+    //Добавляем созданное выше содержимое таблицы
+    modal.appendChild(modalContentTable);
+
+
+    //Создаём область с кнопкой сокрытия
+    let servicesModalEvents = document.createElement("div");
+    servicesModalEvents.className = "modal__buttons";
+    let hideServicePatientsBtn = document.createElement("button");
+    hideServicePatientsBtn.className = "modal__buttons--hideModal";
+    hideServicePatientsBtn.innerText = "Закрыть";
+    hideServicePatientsBtn.addEventListener("click", () => hidePatientsModal())
+
+    servicesModalEvents.appendChild(hideServicePatientsBtn);
+
+    modal.appendChild(servicesModalEvents);
+
+    modal.style.display = "block";
+    modal.style.opacity = "100";
+}
+//Функция создания строки для таблицы
+function createTableRow(patient) {
+    let rowOfPatientData = document.createElement("tr");
+
+    let patientName = document.createElement("td");
+    patientName.textContent = `${patient.Name}`;
+
+    let patientSurname = document.createElement("td");
+    patientSurname.textContent = `${patient.Surname}`;
+
+    let patientFatherName = document.createElement("td");
+    patientFatherName.textContent = `${patient.FatherName}`;
+
+    let patientBirthDate = document.createElement("td");
+    patientBirthDate.textContent = `${patient.BirthDate}`;
+
+    let patientAddress = document.createElement("td");
+    patientAddress.textContent = `${patient.Address}`;
+
+    let patientPhoneNumber = document.createElement("td");
+    patientPhoneNumber.textContent = `${patient.PhoneNumber}`;
+
+    rowOfPatientData.appendChild(patientName);
+    rowOfPatientData.appendChild(patientSurname);
+    rowOfPatientData.appendChild(patientFatherName);
+    rowOfPatientData.appendChild(patientBirthDate);
+    rowOfPatientData.appendChild(patientAddress);
+    rowOfPatientData.appendChild(patientPhoneNumber);
+
+    return rowOfPatientData;
+}
+
+//Функция отображающая докторов, которые оказывают текующую услугу.
+function displayDoctorsModal(service, doctors) {
+    //Создание ссылки на html элемент
+    const modal = document.getElementById("serviceDoctorsModal");
+    //Затирание предыдущег осодержимого окна пациентов определённого доктора
+    modal.innerHTML = "";
+
+    //Создание заголовка модального окна
+    let modalContextHeader = document.createElement("h2");
+    modalContextHeader.className = "modal__title";
+    modalContextHeader.textContent = `Доктора оказывающие: ${service.ServiceName}`;
+
+    //Создание таблицы модального окна
+    let modalContentTable = document.createElement("table");
+
+    //Создание заголовков таблицы
+    let rowOfContextTableHeaders = document.createElement("tr");
+
+    let doctorNameHeader = document.createElement("th");
+    doctorNameHeader.textContent = "Имя";
+
+    let doctorSurnameHeader = document.createElement("th");
+    doctorSurnameHeader.textContent = `Фамилия`;
+
+    let doctorFatherNameHeader = document.createElement("th");
+    doctorFatherNameHeader.textContent = `Отчество`;
+
+    let doctorStartWorkDateHeader = document.createElement("th");
+    doctorStartWorkDateHeader.textContent = "Начало работы";
+
+    let doctorOfficeNumberHeader = document.createElement("th");
+    doctorOfficeNumberHeader.textContent = "Номер кабинета"
+
+    let doctorSpecializationHeader = document.createElement("th");
+    doctorSpecializationHeader.textContent = "Специализация"
+
+    rowOfContextTableHeaders.appendChild(doctorNameHeader);
+    rowOfContextTableHeaders.appendChild(doctorSurnameHeader);
+    rowOfContextTableHeaders.appendChild(doctorFatherNameHeader);
+    rowOfContextTableHeaders.appendChild(doctorStartWorkDateHeader);
+    rowOfContextTableHeaders.appendChild(doctorOfficeNumberHeader);
+    rowOfContextTableHeaders.appendChild(doctorSpecializationHeader);
+
+    //Собираем таблицу
+    modal.appendChild(modalContextHeader);
+    modal.appendChild(rowOfContextTableHeaders);
+
+    //Создание данных внутри таблицы
+    doctors.forEach((doctor) => {
+        modalContentTable.appendChild(createTableRow(doctor));
+    });
+
+    //Добавлем созданное выше содержимое таблицы
+    modal.appendChild(modalContentTable);
+
+    //Создаём область с кнопкой сокрытия
+    let doctorsModalEvents = document.createElement("div");
+    doctorsModalEvents.className = "modal__buttons";
+    let hidePatientDoctorsBtn = document.createElement("button");
+    hidePatientDoctorsBtn.className = "modal__buttons--hideModal";
+    hidePatientDoctorsBtn.innerText = "Закрыть";
+    hidePatientDoctorsBtn.addEventListener("click", () => hideDoctorsModal())
+
+    doctorsModalEvents.appendChild(hidePatientDoctorsBtn);
+
+    modal.appendChild(doctorsModalEvents);
+
+    modal.style.display = "block";
+    modal.style.opacity = "100";
+}
+
+function createTableRow(doctor) {
+    let rowOfDoctorsData = document.createElement("tr");
+
+    let doctorName = document.createElement("td");
+    doctorName.textContent = `${doctor.Name}`;
+
+    let doctorSurname = document.createElement("td");
+    doctorSurname.textContent = `${doctor.Surname}`;
+
+    let doctorFatherName = document.createElement("td");
+    doctorFatherName.textContent = `${doctor.FatherName}`;
+
+    let doctorStartWorkDate = document.createElement("td");
+    doctorStartWorkDate.textContent = `${doctor.StartWorkDate}`;
+
+    let doctorOfficeNumber = document.createElement("td");
+    doctorOfficeNumber.textContent = `${doctor.OfficeNumber}`;
+
+    let doctorSpecialization = document.createElement("td");
+    doctorSpecialization.textContent = `${doctor.Specialization}`;
+
+    rowOfDoctorsData.appendChild(doctorName);
+    rowOfDoctorsData.appendChild(doctorSurname);
+    rowOfDoctorsData.appendChild(doctorFatherName);
+    rowOfDoctorsData.appendChild(doctorStartWorkDate);
+    rowOfDoctorsData.appendChild(doctorOfficeNumber);
+    rowOfDoctorsData.appendChild(doctorSpecialization);
+
+    return rowOfDoctorsData;
+}
+
+function hideDoctorsModal() {
+    const modal = document.getElementById("serviceDoctorsModal");
+    modal.style.display = "none";
+}
+
+function hidePatientsModal() {
+    const modal = document.getElementById("servicePatientsModal");
+    modal.style.display = "none";
+}
+
 //Реализовать добавление услуги
