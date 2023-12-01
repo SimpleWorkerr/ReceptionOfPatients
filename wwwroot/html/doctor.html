@@ -69,7 +69,7 @@
             <input type="text" placeholder="Номер кабинета" id="room">
             <input type="text" placeholder="Начало работы" id="workStart">
             <input type="text" placeholder="Специализация" id="specialization">
-            <input type="text" placeholder="Список услуг" id="services">
+            <button id="services">Выбрать услуги</button>
             <div class="modal__buttons">
                 <button class="modal__buttons--saveData" onclick="addDoctor()">Сохранить</button>
                 <button class="modal__buttons--hideModal" onclick="hideModal()">Отменить</button>
@@ -78,11 +78,7 @@
 
         <!-- Модальное окно для пациентов -->
         <div class="modal" id="patientsModal">
-            <h2 class="modal__title">Пациенты доктора</h2>
-            <div id="patientsList" class="modal__content"></div>
-            <div class="modal__buttons">
-                <button class="modal__buttons--hideModal" onclick="hidePatientsModal()">Закрыть</button>
-            </div>
+            
         </div>
 
         <!-- Оверлей -->
