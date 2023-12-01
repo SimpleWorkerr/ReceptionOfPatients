@@ -251,7 +251,7 @@ function displayPatientsModal(doctor, patients) {
     patientSurnameHeader.textContent = `Фамилия`;
 
     let patientFatherNameHeader = document.createElement("th");
-    patientFatherNameHeader.textContent = `$Отчество`;
+    patientFatherNameHeader.textContent = `Отчество`;
 
     let patientBirthDateHeader = document.createElement("th");
     patientBirthDateHeader.textContent = `Дата рождения`;
