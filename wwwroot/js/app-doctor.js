@@ -157,6 +157,7 @@ async function deleteDoctor(doctor) {
 
 // Функция добавления доктора
 async function addDoctor() {
+
     // Получение данных из формы
     const name = document.getElementById("name").value;
     const room = document.getElementById("room").value;
@@ -196,6 +197,126 @@ async function addDoctor() {
         console.error(error);
         alert("Произошла ошибка при добавлении доктора");
     }
+}
+
+function displayAddDoctorModal() {
+    //Создание ссылки на корневой элемент модельного окна
+    const modal = document.getElementById("modal");
+
+    modal.innerHTML = "";
+
+    let modalHeader = document.createElement("h2");
+    modalHeader.className = "modal__title";
+    modalHeader.textContent = "Внесите информацию о докторе";
+
+    let doctorFIO = document.createElement("input");
+    doctorFIO.id = "doctorFIO";
+    doctorFIO.type = "text";
+    doctorFIO.placeholder = "ФИО"
+
+    let doctorRoom = document.createElement("input");
+    doctorRoom.id = "doctorRoom";
+    doctorRoom.type = "text";
+    doctorRoom.placeholder = "Номер кабинета"
+
+    let doctorWorkStart = document.createElement("input");
+    doctorWorkStart.id = "doctorWorkStart";
+    doctorWorkStart.type = "text";
+    doctorWorkStart.placeholder = "Начало работы"
+
+    let doctorSpecialization = document.createElement("input");
+    doctorSpecialization.id = "doctorSpecialization";
+    doctorSpecialization.type = "text";
+    doctorSpecialization.placeholder = "Специализация";
+
+    let doctorServicesSelectBtn = document.createElement("button");
+    doctorServicesSelectBtn.id = "doctorServices";
+    doctorServicesSelectBtn.addEventListener("click", () => createServicesModal());
+    doctorServicesSelectBtn.textContent = "Выбрать услуги";
+
+    let doctorPatientsSelectBtn = document.createElement("button");
+    doctorPatientsSelectBtn.id = "doctorPatients";
+    doctorPatientsSelectBtn.addEventListener("click", () => createPatientsModal());
+    doctorPatientsSelectBtn.textContent = "Выбрать пациентов";
+
+    let doctorEvents = document.createElement("div");
+    doctorEvents.className = "modal__buttons";
+
+    let doctorSaveData = document.createElement("button");
+    doctorSaveData.className = "modal__buttons--saveData";
+    doctorSaveData.textContent = "Сохранить";
+    doctorSaveData.addEventListener("click", () => addDoctor());
+
+    let doctorCancel = document.createElement("button");
+    doctorCancel.className = "modal__buttons--hideModal";
+    doctorCancel.textContent = "Отменить";
+    doctorCancel.addEventListener("click", () => hideModal());
+
+    doctorEvents.appendChild(doctorSaveData);
+    doctorEvents.appendChild(doctorCancel);
+
+    //Собираем карточку
+    modal.appendChild(modalHeader);
+    modal.appendChild(doctorFIO);
+    modal.appendChild(doctorRoom);
+    modal.appendChild(doctorWorkStart);
+    modal.appendChild(doctorSpecialization);
+    modal.appendChild(doctorServicesSelectBtn);
+    modal.appendChild(doctorPatientsSelectBtn);
+    modal.appendChild(doctorEvents);
+
+    //Отображаем окно
+    showModal();
+}
+//Создание модального окна для отображения пациентов
+function createPatientsModal() {
+    const modal = document.getElementById("doctorPatientsModal");
+
+    modal.innerHTML = "<p>Пациенты</p"
+
+    //Создаём область с кнопкой сокрытия
+    let patientsModalEvents = document.createElement("div");
+    patientsModalEvents.className = "modal__buttons";
+    let hidePatientsBtn = document.createElement("button");
+    hidePatientsBtn.className = "modal__buttons--hideModal";
+    hidePatientsBtn.innerText = "Закрыть";
+    hidePatientsBtn.addEventListener("click", () => hideCreatePatientsModal())
+
+    patientsModalEvents.appendChild(hidePatientsBtn);
+
+    modal.appendChild(patientsModalEvents);
+
+    modal.style.display = "block";
+    modal.style.opacity = "100";
+}
+//Создание модального окна для отображения сервисов
+function createServicesModal() {
+    const modal = document.getElementById("doctorServicesModal");
+
+    modal.innerHTML = "<p>Сервисы</p"
+
+    //Создаём область с кнопкой сокрытия
+    let servicesModalEvents = document.createElement("div");
+    servicesModalEvents.className = "modal__buttons";
+    let hideServicesBtn = document.createElement("button");
+    hideServicesBtn.className = "modal__buttons--hideModal";
+    hideServicesBtn.innerText = "Закрыть";
+    hideServicesBtn.addEventListener("click", () => hideCreateServicesModal())
+
+    servicesModalEvents.appendChild(hideServicesBtn);
+
+    modal.appendChild(servicesModalEvents);
+
+    modal.style.display = "block";
+    modal.style.opacity = "100";
+}
+function hideCreateServicesModal() {
+    const modal = document.getElementById("doctorServicesModal")
+    modal.style.display = "none";
+}
+function hideCreatePatientsModal() {
+    const modal = document.getElementById("doctorPatientsModal")
+    modal.style.display = "none";
 }
 
 

@@ -56,31 +56,22 @@
         </main>
 
         <footer class="footer">
-            <button class="footer__button footer__button--add" onclick="showModal()">
+            <button class="footer__button footer__button--add" onclick="displayAddDoctorModal()">
                 Добавить доктора
             </button>
         </footer>
 
         <!-- Модальное окно -->
         <div class="modal" id="modal">
-            <h2 class="modal__title">
-                Внесите информацию о докторе:</h2>
-            <input type="text" placeholder="ФИО" id="name">
-            <input type="text" placeholder="Номер кабинета" id="room">
-            <input type="text" placeholder="Начало работы" id="workStart">
-            <input type="text" placeholder="Специализация" id="specialization">
-            <button id="services">Выбрать услуги</button>
-            <div class="modal__buttons">
-                <button class="modal__buttons--saveData" onclick="addDoctor()">Сохранить</button>
-                <button class="modal__buttons--hideModal" onclick="hideModal()">Отменить</button>
-            </div>
-        </div>
-
-        <!-- Модальное окно для пациентов -->
-        <div class="modal" id="patientsModal">
             
         </div>
 
+        <!-- Модальное окно для пациентов -->
+        <div class="modal" id="patientsModal"></div>
+        <!-- Окно для выборки пациентов-->
+        <div class="modal" id="doctorServicesModal"></div>
+        <!-- Окно для выборки услуг-->
+        <div class="modal" id="doctorPatientsModal"></div>
         <!-- Оверлей -->
         <div id="overlay"></div>
     </div>
