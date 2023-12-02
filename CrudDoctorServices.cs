@@ -42,9 +42,20 @@ namespace ReceptionOfPatients
 
         public List<Doctor> Read(AppContext context)
         {
-            var tempValue = context.Doctors;
+            var tempValue = context.Doctors.ToList();
 
-            return tempValue.ToList();
+            List<Doctor?> doctorsResult = new List<Doctor?>();
+
+            foreach(var doc in tempValue)
+            {
+                doc.Patients = new List<Patient>();
+                doc.Services = new List<Service>();
+                doc.Receptions = new List<Reception>();
+
+                doctorsResult.Add(doc);
+            }
+
+            return doctorsResult;
         }
 
         public void Update(AppContext context, Doctor? value)
