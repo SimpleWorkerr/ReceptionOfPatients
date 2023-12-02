@@ -64,12 +64,12 @@ async function createDoctorCardElement(doctor) {
     cardDoctorsActions.className = "doctor-card__actions"
     //Кнопка отображения докторов, текущего пациента
     const doctorPatientsBtn = document.createElement("button");
-    doctorPatientsBtn.addEventListener("click", () => readDoctorPatients(doctor));
+    doctorPatientsBtn.addEventListener("click", async () => { await readDoctorPatients(doctor); });
     doctorPatientsBtn.className = "doctor-card__button doctor-card__button--patients";
     doctorPatientsBtn.innerText = "Пациенты";
     //Кнопка изменения данных о докторе
     const doctorChangeBtn = document.createElement("button");
-    doctorChangeBtn.addEventListener("click", () => displayChangeDoctor(doctor));
+    doctorChangeBtn.addEventListener("click", async () => { await displayChangeDoctor(doctor); });
     doctorChangeBtn.className = "doctor-card__button doctor-card__button--edit";
     doctorChangeBtn.innerText = "Изменить";
     //Кнопка удаления доктора
@@ -185,7 +185,7 @@ async function changeDoctor(doctor) {
         alert("Произошла ошибка при добавлении доктора");
     }
 }
-function displayChangeDoctor(doctor) {
+async function displayChangeDoctor(doctor) {
     //Создание ссылки на корневой элемент модельного окна
     const modal = document.getElementById("modal");
 
@@ -217,12 +217,12 @@ function displayChangeDoctor(doctor) {
 
     let doctorServicesSelectBtn = document.createElement("button");
     doctorServicesSelectBtn.id = "doctorServices";
-    doctorServicesSelectBtn.addEventListener("click", () => createServicesModal(doctor));
+    doctorServicesSelectBtn.addEventListener("click", async () => await createServicesModal(doctor));
     doctorServicesSelectBtn.textContent = "Выбрать услуги";
 
     let doctorPatientsSelectBtn = document.createElement("button");
     doctorPatientsSelectBtn.id = "doctorPatients";
-    doctorPatientsSelectBtn.addEventListener("click", () => createPatientsModal(doctor));
+    doctorPatientsSelectBtn.addEventListener("click", async () => await createPatientsModal(doctor));
     doctorPatientsSelectBtn.textContent = "Выбрать пациентов";
 
     let doctorEvents = document.createElement("div");
@@ -399,12 +399,12 @@ async function displayAddDoctorModal() {
 
     let doctorServicesSelectBtn = document.createElement("button");
     doctorServicesSelectBtn.id = "doctorServices";
-    doctorServicesSelectBtn.addEventListener("click", () => createServicesModal());
+    doctorServicesSelectBtn.addEventListener("click", async () => await createServicesModal());
     doctorServicesSelectBtn.textContent = "Выбрать услуги";
 
     let doctorPatientsSelectBtn = document.createElement("button");
     doctorPatientsSelectBtn.id = "doctorPatients";
-    doctorPatientsSelectBtn.addEventListener("click", () => createPatientsModal());
+    doctorPatientsSelectBtn.addEventListener("click", async () => await createPatientsModal());
     doctorPatientsSelectBtn.textContent = "Выбрать пациентов";
 
     let doctorEvents = document.createElement("div");

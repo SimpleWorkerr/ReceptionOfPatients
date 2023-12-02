@@ -236,7 +236,7 @@ body {
   border-radius: 8px;
   padding: 20px;
   width: 400px;
-  z-index: 2;
+  z-index: 20;
   opacity: 0; /* Изначально модальное окно прозрачное */
   transform: translate(-50%, -50%) scale(0.9); /* Убрано пересечение с translate(-50%, -50%) */
   transition: opacity 0.5s ease, transform 0.5s ease; /* Плавные переходы */
