@@ -23,12 +23,12 @@ async function loadDataDoctors() {
 
         //Добавление карточек
         for (let i = 0; i < doctors.length; i++) {
-            doctors_cards.appendChild(createDoctorCardElement(doctors[i]));
+            doctors_cards.appendChild(await createDoctorCardElement(doctors[i]));
         }
     }
 }
 //Функция для создания карточек докторов
-function createDoctorCardElement(doctor) {
+async function createDoctorCardElement(doctor) {
     //Создаём блок карточки
     const card = document.createElement("div");
     card.className = "doctor-card";
@@ -53,6 +53,9 @@ function createDoctorCardElement(doctor) {
     const doctorSpecialization = document.createElement("p");
     doctorSpecialization.className = "doctor-card__detail";
     doctorSpecialization.textContent = `${doctor.Specialization}`;
+    //Заголовок списка услуги
+    const doctorServicesHeader = document.createElement("h4");
+    doctorServicesHeader.textContent = "Услуги"
     //Список услуг доктора
     const doctorServices = createListDoctorServices(doctor);
 
@@ -66,7 +69,7 @@ function createDoctorCardElement(doctor) {
     doctorPatientsBtn.innerText = "Пациенты";
     //Кнопка изменения данных о докторе
     const doctorChangeBtn = document.createElement("button");
-    doctorChangeBtn.addEventListener("click", () => changeDoctor(doctor));
+    doctorChangeBtn.addEventListener("click", () => displayChangeDoctor(doctor));
     doctorChangeBtn.className = "doctor-card__button doctor-card__button--edit";
     doctorChangeBtn.innerText = "Изменить";
     //Кнопка удаления доктора
@@ -89,6 +92,7 @@ function createDoctorCardElement(doctor) {
     cardInfo.appendChild(doctorOffice);
     cardInfo.appendChild(doctorStartWorkDate);
     cardInfo.appendChild(doctorSpecialization);
+    cardInfo.appendChild(doctorServicesHeader);
     cardInfo.appendChild(doctorServices);
 
     return card;
@@ -111,22 +115,157 @@ function createListDoctorServices(doctor) {
 }
 
 //Функция изменения доктора
-function changeDoctor(doctor) {
-    console.log(JSON.stringify(doctor));
+async function changeDoctor(doctor) {
+    // Получение данных из формы
+    const doctorFIO = document.getElementById("doctorFIO").value;
+    const doctorRoom = document.getElementById("doctorRoom").value;
+    const doctorWorkStart = document.getElementById("doctorWorkStart").value;
+    const doctorSpecialization = document.getElementById("doctorSpecialization").value;
 
-    //Тут реализовать работу с изменением
-    doctor.Name = doctor.Name + "Amogus";
+    let fioArray = doctorFIO.split(" ");
 
-    let url = "/doctor?operation=update";
-    fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(doctor),
-    }).then((response) => console.log(response));
+    let services = new Array();
+    const servicesCheckbox = document.getElementsByClassName("servicesCheckbox");
+
+    for (let i = 0; i < servicesCheckbox.length; i++) {
+
+        if (servicesCheckbox[i].checked) {
+            let Service = {
+                Id: servicesCheckbox[i].value
+            }
+            services.push(Service);
+        }
+    }
+
+    let patients = new Array();
+    const patientsCheckbox = document.getElementsByClassName("patientsChekbox");
+
+    for (let i = 0; i < patientsCheckbox.length; i++) {
+
+        if (patientsCheckbox[i].checked) {
+            let Patient = {
+                Id: patientsCheckbox[i].value
+            }
+            patients.push(Patient);
+        }
+    }
+
+    // Создание объекта доктора
+    const newDoctor = {
+        Id: doctor.Id,
+        Surname: fioArray[0],
+        Name: fioArray[1],
+        FatherName: fioArray[2],
+        OfficeNumber: doctorRoom,
+        StartWorkDate: new Date(doctorWorkStart).toISOString(),
+        Specialization: doctorSpecialization,
+        Services: services,
+        Patients: patients
+    };
+
+    // Отправка данных на сервер
+    try {
+        const response = await fetch("/doctor?operation=update", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newDoctor),
+        });
+
+        if (response.ok) {
+            // Обновление данных на странице
+            await loadDataDoctors();
+            hideModal();
+        } else {
+            throw new Error("Ошибка добавления доктора");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Произошла ошибка при добавлении доктора");
+    }
 }
+function displayChangeDoctor(doctor) {
+    //Создание ссылки на корневой элемент модельного окна
+    const modal = document.getElementById("modal");
 
+    modal.innerHTML = "";
+
+    let modalHeader = document.createElement("h2");
+    modalHeader.className = "modal__title";
+    modalHeader.textContent = "Измените информацию о докторе";
+
+    let doctorFIO = document.createElement("input");
+    doctorFIO.id = "doctorFIO";
+    doctorFIO.type = "text";
+    doctorFIO.value = `${doctor.Surname} ${doctor.Name} ${doctor.FatherName}`;
+
+    let doctorRoom = document.createElement("input");
+    doctorRoom.id = "doctorRoom";
+    doctorRoom.type = "text";
+    doctorRoom.value = `${doctor.OfficeNumber}`;
+
+    let doctorWorkStart = document.createElement("input");
+    doctorWorkStart.id = "doctorWorkStart";
+    doctorWorkStart.type = "text";
+    doctorWorkStart.value = `${doctor.StartWorkDate}`;
+
+    let doctorSpecialization = document.createElement("input");
+    doctorSpecialization.id = "doctorSpecialization";
+    doctorSpecialization.type = "text";
+    doctorSpecialization.value = `${doctor.Specialization}`;
+
+    let doctorServicesSelectBtn = document.createElement("button");
+    doctorServicesSelectBtn.id = "doctorServices";
+    doctorServicesSelectBtn.addEventListener("click", () => createServicesModal(doctor));
+    doctorServicesSelectBtn.textContent = "Выбрать услуги";
+
+    let doctorPatientsSelectBtn = document.createElement("button");
+    doctorPatientsSelectBtn.id = "doctorPatients";
+    doctorPatientsSelectBtn.addEventListener("click", () => createPatientsModal(doctor));
+    doctorPatientsSelectBtn.textContent = "Выбрать пациентов";
+
+    let doctorEvents = document.createElement("div");
+    doctorEvents.className = "modal__buttons";
+
+    let doctorSaveData = document.createElement("button");
+    doctorSaveData.className = "modal__buttons--saveData";
+    doctorSaveData.textContent = "Изменить";
+    doctorSaveData.addEventListener("click", () => {
+        changeDoctor(doctor);
+    });
+
+    let doctorCancel = document.createElement("button");
+    doctorCancel.className = "modal__buttons--hideModal";
+    doctorCancel.textContent = "Отменить";
+    doctorCancel.addEventListener("click", () => {
+        const modalPatient = document.getElementById("doctorPatientsModal")
+        modalPatient.innerHTML = "";
+        modalPatient.style.display = "none";
+
+        const modalService = document.getElementById("doctorServicesModal")
+        modalService.innerHTML = "";
+        modalService.style.display = "none";
+
+        hideModal();
+    });
+
+    doctorEvents.appendChild(doctorSaveData);
+    doctorEvents.appendChild(doctorCancel);
+
+    //Собираем карточку
+    modal.appendChild(modalHeader);
+    modal.appendChild(doctorFIO);
+    modal.appendChild(doctorRoom);
+    modal.appendChild(doctorWorkStart);
+    modal.appendChild(doctorSpecialization);
+    modal.appendChild(doctorServicesSelectBtn);
+    modal.appendChild(doctorPatientsSelectBtn);
+    modal.appendChild(doctorEvents);
+
+    //Отображаем окно
+    showModal();
+}
 // Функция удаления доктора
 async function deleteDoctor(doctor) {
     const url = "/doctor?operation=delete";
@@ -145,7 +284,7 @@ async function deleteDoctor(doctor) {
         });
 
         if (response.ok) {
-            loadDataDoctors();
+            await loadDataDoctors();
         } else {
             throw new Error("Ошибка удаления доктора");
         }
@@ -274,7 +413,9 @@ async function displayAddDoctorModal() {
     let doctorSaveData = document.createElement("button");
     doctorSaveData.className = "modal__buttons--saveData";
     doctorSaveData.textContent = "Сохранить";
-    doctorSaveData.addEventListener("click", () => addDoctor());
+    doctorSaveData.addEventListener("click", () => {
+        addDoctor();
+    });
 
     let doctorCancel = document.createElement("button");
     doctorCancel.className = "modal__buttons--hideModal";
@@ -309,7 +450,7 @@ async function displayAddDoctorModal() {
 }
 
 //Создание модального окна для отображения пациентов
-async function createPatientsModal() {
+async function createPatientsModal(doctor = null) {
 
     const modal = document.getElementById("doctorPatientsModal");
 
@@ -340,6 +481,13 @@ async function createPatientsModal() {
             checkBoxPatientLabel.textContent = `${patients[i].Surname} ${patients[i].Name[0]}. ${patients[i].FatherName[0]}.`
             checkBoxPatientLabel.for = checkboxId;
 
+            if (doctor != null) {
+                for (let j = 0; j < doctor.Patients.length; j++) {
+                    if (patients[i].Id == doctor.Patients[j].Id) {
+                        checkBoxPatient.checked = true;
+                    }
+                }
+            }
 
             modal.appendChild(checkBoxPatient);
             modal.appendChild(checkBoxPatientLabel);
@@ -351,6 +499,7 @@ async function createPatientsModal() {
                 if (prevCheckboxesContainerClone.childNodes[i].nodeName == "LABEL") {
                     continue;
                 }
+
                 let tempCheckBox = document.getElementById(prevCheckboxesContainerClone.childNodes[i].id);
 
                 tempCheckBox.checked = prevCheckboxesContainerClone.childNodes[i].checked;
@@ -375,7 +524,7 @@ async function createPatientsModal() {
 }
 
 //Создание модального окна для отображения сервисов
-async function createServicesModal() {
+async function createServicesModal(doctor = null) {
     const modal = document.getElementById("doctorServicesModal");
 
     let prevCheckboxesContainerClone = document.getElementById("doctorServicesModal").cloneNode(true);
@@ -405,6 +554,13 @@ async function createServicesModal() {
             checkBoxServiceLabel.textContent = `${services[i].ServiceName} ${services[i].Price}.`
             checkBoxServiceLabel.for = checkboxId;
 
+            if (doctor != null) {
+                for (let j = 0; j < doctor.Services.length; j++) {
+                    if (services[i].Id == doctor.Services[j].Id) {
+                        checkBoxService.checked = true;
+                    }
+                }
+            }
 
             modal.appendChild(checkBoxService);
             modal.appendChild(checkBoxServiceLabel);
