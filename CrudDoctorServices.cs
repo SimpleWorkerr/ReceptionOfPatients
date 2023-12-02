@@ -42,20 +42,16 @@ namespace ReceptionOfPatients
 
         public List<Doctor> Read(AppContext context)
         {
-            var tempValue = context.Doctors.ToList();
+            var tempValue = context.Doctors.Include(doc => doc.Patients).ToList();
 
-            List<Doctor?> doctorsResult = new List<Doctor?>();
+            List<Doctor> result = new List<Doctor>();
 
             foreach(var doc in tempValue)
             {
-                doc.Patients = new List<Patient>();
-                doc.Services = new List<Service>();
-                doc.Receptions = new List<Reception>();
-
-                doctorsResult.Add(doc);
+                result.Add(doc.CreateJsonObject());
             }
 
-            return doctorsResult;
+            return result;
         }
 
         public void Update(AppContext context, Doctor? value)
@@ -95,7 +91,14 @@ namespace ReceptionOfPatients
                             where reception.DoctorId == doctorId
                             select reception.Patient;
 
-            return tempValue.ToList();
+            List<Patient> result = new List<Patient>();
+
+            foreach (var pat in tempValue)
+            {
+                result.Add(pat.CreateJsonObject());
+            }
+
+            return result;
         }
 
         private bool HasId(List<Patient> patients, Patient patient)

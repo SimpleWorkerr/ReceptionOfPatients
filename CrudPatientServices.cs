@@ -26,18 +26,14 @@ namespace ReceptionOfPatients
         {
             var tempValue = context.Patients.ToList();
 
-            List<Patient> patientsResult = new List<Patient>();
+            List<Patient> result = new List<Patient>();
 
             foreach (var pat in tempValue)
             {
-                pat.Services = new List<Service?>();
-                pat.Doctors = new List<Doctor>();
-                pat.Receptions = new List<Reception>();
-
-                patientsResult.Add(pat);
+                result.Add(pat.CreateJsonObject());
             }
 
-            return patientsResult;
+            return result;
         }
 
         public void Update(AppContext context, Patient? value)
@@ -64,7 +60,14 @@ namespace ReceptionOfPatients
                             where rec.PatientId == patientId
                             select rec.Doctor;
 
-            return tempValue.ToList();
+            List<Doctor> result = new List<Doctor>();
+
+            foreach (var doc in tempValue)
+            {
+                result.Add(doc.CreateJsonObject());
+            }
+
+            return result.ToList();
         }
     }
 }

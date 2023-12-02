@@ -27,5 +27,52 @@ namespace ReceptionOfPatients
 
             return stringBuilder.ToString();
         }
+
+        public Doctor CreateJsonObject()
+        {
+            Doctor result = new Doctor();
+
+            result.Id = Id;
+            result.Name = Name;
+            result.Surname = Surname;
+            result.FatherName = FatherName;
+            result.StartWorkDate = StartWorkDate;
+            result.OfficeNumber = OfficeNumber;
+            result.Specialization = Specialization;
+
+            foreach (var patient in Patients)
+            {
+                result.Patients.Add(new Patient()
+                {
+                    Id = patient.Id,
+                    Name = patient.Name,
+                    Surname = patient.Surname,
+                    FatherName = patient.FatherName,
+                    Address = patient.Address,
+                    BirthDate = patient.BirthDate,
+                    PhoneNumber = patient.PhoneNumber
+                });
+            }
+            foreach(var reception in Receptions)
+            {
+                result.Receptions.Add(new Reception()
+                {
+                    Id=reception.Id,
+                    DoctorId = reception.DoctorId,
+                    PatientId = reception.PatientId,
+                    ReceptionDate = reception.ReceptionDate
+                });
+            }
+            foreach(var service in Services)
+            {
+                result.Services.Add(new Service()
+                {
+                    Price = service.Price,
+                    ServiceName = service.ServiceName,
+                });
+            }
+
+            return result;
+        }
     }
 }

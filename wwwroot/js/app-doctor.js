@@ -467,42 +467,62 @@ async function createPatientsModal(doctor = null) {
 
         patients = await responsePatients.json();
 
-        //Добавление содержимого в модальное окно пациентов, при добавлении доктора
-        for (let i = 0; i < patients.length; i++) {
-            let checkboxId = `patientChekbox: ${patients[i].Id}`;
+        if (doctor != null) {
+            for (let i = 0; i < patients.length; i++) {
+                let checkboxId = `patientChekbox: ${patients[i].Id}`;
 
-            let checkBoxPatient = document.createElement("input");
-            checkBoxPatient.id = checkboxId;
-            checkBoxPatient.value = patients[i].Id;
-            checkBoxPatient.className = "patientsChekbox";
-            checkBoxPatient.type = "checkbox"
+                let checkBoxPatient = document.createElement("input");
+                checkBoxPatient.id = checkboxId;
+                checkBoxPatient.value = patients[i].Id;
+                checkBoxPatient.className = "patientsChekbox";
+                checkBoxPatient.type = "checkbox"
 
-            let checkBoxPatientLabel = document.createElement("label");
-            checkBoxPatientLabel.textContent = `${patients[i].Surname} ${patients[i].Name[0]}. ${patients[i].FatherName[0]}.`
-            checkBoxPatientLabel.for = checkboxId;
+                let checkBoxPatientLabel = document.createElement("label");
+                checkBoxPatientLabel.textContent = `${patients[i].Surname} ${patients[i].Name[0]}. ${patients[i].FatherName[0]}.`
+                checkBoxPatientLabel.for = checkboxId;
 
-            if (doctor != null) {
-                for (let j = 0; j < doctor.Patients.length; j++) {
-                    if (patients[i].Id == doctor.Patients[j].Id) {
-                        checkBoxPatient.checked = true;
+                if (doctor != null) {
+                    for (let j = 0; j < doctor.Patients.length; j++) {
+                        if (patients[i].Id == doctor.Patients[j].Id) {
+                            checkBoxPatient.checked = true;
+                        }
                     }
                 }
+
+                modal.appendChild(checkBoxPatient);
+                modal.appendChild(checkBoxPatientLabel);
+            }
+        }
+        else {
+            //Добавление содержимого в модальное окно пациентов, при добавлении доктора
+            for (let i = 0; i < patients.length; i++) {
+                let checkboxId = `patientChekbox: ${patients[i].Id}`;
+
+                let checkBoxPatient = document.createElement("input");
+                checkBoxPatient.id = checkboxId;
+                checkBoxPatient.value = patients[i].Id;
+                checkBoxPatient.className = "patientsChekbox";
+                checkBoxPatient.type = "checkbox"
+
+                let checkBoxPatientLabel = document.createElement("label");
+                checkBoxPatientLabel.textContent = `${patients[i].Surname} ${patients[i].Name[0]}. ${patients[i].FatherName[0]}.`
+                checkBoxPatientLabel.for = checkboxId;
+
+                modal.appendChild(checkBoxPatient);
+                modal.appendChild(checkBoxPatientLabel);
             }
 
-            modal.appendChild(checkBoxPatient);
-            modal.appendChild(checkBoxPatientLabel);
-        }
+            //Есть ли у предыдущего контейнера дочерние элементы, и выставляем значения checkbox
+            if (prevCheckboxesContainerClone.hasChildNodes()) {
+                for (let i = 0; i < prevCheckboxesContainerClone.childNodes.length - 1; i++) {
+                    if (prevCheckboxesContainerClone.childNodes[i].nodeName == "LABEL") {
+                        continue;
+                    }
 
-        //Есть ли у предыдущего контейнера дочерние элементы, и выставляем значения checkbox
-        if (prevCheckboxesContainerClone.hasChildNodes()) {
-            for (let i = 0; i < prevCheckboxesContainerClone.childNodes.length - 1; i++) {
-                if (prevCheckboxesContainerClone.childNodes[i].nodeName == "LABEL") {
-                    continue;
+                    let tempCheckBox = document.getElementById(prevCheckboxesContainerClone.childNodes[i].id);
+
+                    tempCheckBox.checked = prevCheckboxesContainerClone.childNodes[i].checked;
                 }
-
-                let tempCheckBox = document.getElementById(prevCheckboxesContainerClone.childNodes[i].id);
-
-                tempCheckBox.checked = prevCheckboxesContainerClone.childNodes[i].checked;
             }
         }
     }

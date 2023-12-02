@@ -37,7 +37,14 @@ namespace ReceptionOfPatients
         {
             var tempValue = context.Receptions;
 
-            return tempValue.ToList();
+            List<Reception> result = new List<Reception>();
+
+            foreach (var rec in tempValue)
+            {
+                result.Add(rec.CreateJsonObject());
+            }
+
+            return result;
         }
 
         public void Update(AppContext context, Reception? value)

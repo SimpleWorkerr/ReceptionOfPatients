@@ -29,17 +29,14 @@ namespace ReceptionOfPatients
         {
             var tempValue = context.Services.ToList();
 
-            List<Service> servicesResult = new List<Service>();
+            List<Service> result = new List<Service>();
 
             foreach (var service in tempValue)
             {
-                service.Doctors = new List<Doctor?>();
-                service.Patients = new List<Patient?>();
-
-                servicesResult.Add(service);
+                result.Add(service.CreateJsonObject());
             }
 
-            return servicesResult;
+            return result;
         }
 
         public void Update(AppContext context, Service? value)
@@ -63,7 +60,10 @@ namespace ReceptionOfPatients
             {
                 if(value.Id == serviceId)
                 {
-                    docRes = value.Doctors;
+                    foreach(var doctor in value.Doctors)
+                    {
+                        docRes.Add(doctor?.CreateJsonObject() ?? new Doctor());
+                    }
                     break;
                 }
             }
@@ -79,7 +79,10 @@ namespace ReceptionOfPatients
             {
                 if (value.Id == serviceId)
                 {
-                    patRes = value.Patients;
+                    foreach (var patient in value.Patients)
+                    {
+                        patRes.Add(patient?.CreateJsonObject() ?? new Patient());
+                    }
                     break;
                 }
             }
