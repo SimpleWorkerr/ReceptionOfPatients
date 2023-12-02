@@ -20,6 +20,12 @@ namespace ReceptionOfPatients
                     Specialization = value.Specialization
                 };
 
+                for(int i = 0; i< value.Services.Count; i++)
+                    tempDoc.Services.Add(context.Services.First(service => service.Id == value.Services[i].Id));
+    
+                for(int i = 0; i< value.Patients.Count; i++)
+                    tempDoc.Patients.Add(context.Patients.First(patient => patient.Id == value.Patients[i].Id));
+
                 context.Doctors.Add(tempDoc);
 
                 context.SaveChanges();

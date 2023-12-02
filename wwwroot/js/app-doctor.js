@@ -159,21 +159,49 @@ async function deleteDoctor(doctor) {
 async function addDoctor() {
 
     // Получение данных из формы
-    const name = document.getElementById("name").value;
-    const room = document.getElementById("room").value;
-    const workStart = document.getElementById("workStart").value;
-    const specialization = document.getElementById("specialization").value;
-    const services = document.getElementById("services").value; // Предполагается, что это строка
+    const doctorFIO = document.getElementById("doctorFIO").value;
+    const doctorRoom = document.getElementById("doctorRoom").value;
+    const doctorWorkStart = document.getElementById("doctorWorkStart").value;
+    const doctorSpecialization = document.getElementById("doctorSpecialization").value;
+
+    let fioArray = doctorFIO.split(" ");
+
+    let services = new Array();
+    const servicesCheckbox = document.getElementsByClassName("servicesCheckbox");
+
+    for (let i = 0; i < servicesCheckbox.length; i++) {
+
+        if (servicesCheckbox[i].checked) {
+            let Service = {
+                Id: servicesCheckbox[i].value
+            }
+            services.push(Service);
+        }
+    }
+
+    let patients = new Array();
+    const patientsCheckbox = document.getElementsByClassName("patientsChekbox");
+
+    for (let i = 0; i < patientsCheckbox.length; i++) {
+
+        if (patientsCheckbox[i].checked) {
+            let Patient = {
+                Id: patientsCheckbox[i].value
+            }
+            patients.push(Patient);
+        }
+    }
 
     // Создание объекта доктора
     const newDoctor = {
-        Name: name,
-        OfficeNumber: room,
-        StartWorkDate: workStart,
-        Specialization: specialization,
-        Services: services
-            .split(",")
-            .map((service) => ({ ServiceName: service.trim() })), // Разбиваем строку услуг на массив
+        Surname: fioArray[0],
+        Name: fioArray[1],
+        FatherName: fioArray[2],
+        OfficeNumber: doctorRoom,
+        StartWorkDate: new Date(doctorWorkStart).toISOString(),
+        Specialization: doctorSpecialization,
+        Services: services,
+        Patients: patients
     };
 
     // Отправка данных на сервер
@@ -199,7 +227,8 @@ async function addDoctor() {
     }
 }
 
-function displayAddDoctorModal() {
+//Отображение модального окна для добавление доктора
+async function displayAddDoctorModal() {
     //Создание ссылки на корневой элемент модельного окна
     const modal = document.getElementById("modal");
 
@@ -250,7 +279,17 @@ function displayAddDoctorModal() {
     let doctorCancel = document.createElement("button");
     doctorCancel.className = "modal__buttons--hideModal";
     doctorCancel.textContent = "Отменить";
-    doctorCancel.addEventListener("click", () => hideModal());
+    doctorCancel.addEventListener("click", () => {
+        const modalPatient = document.getElementById("doctorPatientsModal")
+        modalPatient.innerHTML = "";
+        modalPatient.style.display = "none";
+
+        const modalService = document.getElementById("doctorServicesModal")
+        modalService.innerHTML = "";
+        modalService.style.display = "none";
+
+        hideModal();
+    });
 
     doctorEvents.appendChild(doctorSaveData);
     doctorEvents.appendChild(doctorCancel);
@@ -268,11 +307,56 @@ function displayAddDoctorModal() {
     //Отображаем окно
     showModal();
 }
+
 //Создание модального окна для отображения пациентов
-function createPatientsModal() {
+async function createPatientsModal() {
+
     const modal = document.getElementById("doctorPatientsModal");
 
-    modal.innerHTML = "<p>Пациенты</p"
+    let prevCheckboxesContainerClone = document.getElementById("doctorPatientsModal").cloneNode(true);
+
+    modal.innerHTML = "";
+
+    const responsePatients = await fetch("patient?operation=read", {
+        method: "post",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" }
+    });
+    if (responsePatients.status == 200) {
+        //Получаем ссылку на див в котором будут checkbox
+
+        patients = await responsePatients.json();
+
+        //Добавление содержимого в модальное окно пациентов, при добавлении доктора
+        for (let i = 0; i < patients.length; i++) {
+            let checkboxId = `patientChekbox: ${patients[i].Id}`;
+
+            let checkBoxPatient = document.createElement("input");
+            checkBoxPatient.id = checkboxId;
+            checkBoxPatient.value = patients[i].Id;
+            checkBoxPatient.className = "patientsChekbox";
+            checkBoxPatient.type = "checkbox"
+
+            let checkBoxPatientLabel = document.createElement("label");
+            checkBoxPatientLabel.textContent = `${patients[i].Surname} ${patients[i].Name[0]}. ${patients[i].FatherName[0]}.`
+            checkBoxPatientLabel.for = checkboxId;
+
+
+            modal.appendChild(checkBoxPatient);
+            modal.appendChild(checkBoxPatientLabel);
+        }
+
+        //Есть ли у предыдущего контейнера дочерние элементы, и выставляем значения checkbox
+        if (prevCheckboxesContainerClone.hasChildNodes()) {
+            for (let i = 0; i < prevCheckboxesContainerClone.childNodes.length - 1; i++) {
+                if (prevCheckboxesContainerClone.childNodes[i].nodeName == "LABEL") {
+                    continue;
+                }
+                let tempCheckBox = document.getElementById(prevCheckboxesContainerClone.childNodes[i].id);
+
+                tempCheckBox.checked = prevCheckboxesContainerClone.childNodes[i].checked;
+            }
+        }
+    }
 
     //Создаём область с кнопкой сокрытия
     let patientsModalEvents = document.createElement("div");
@@ -289,12 +373,55 @@ function createPatientsModal() {
     modal.style.display = "block";
     modal.style.opacity = "100";
 }
+
 //Создание модального окна для отображения сервисов
-function createServicesModal() {
+async function createServicesModal() {
     const modal = document.getElementById("doctorServicesModal");
 
-    modal.innerHTML = "<p>Сервисы</p"
+    let prevCheckboxesContainerClone = document.getElementById("doctorServicesModal").cloneNode(true);
 
+    modal.innerHTML = "";
+
+    const responseServices = await fetch("service?operation=read", {
+        method: "post",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" }
+    });
+    if (responseServices.status == 200) {
+        //Получаем ссылку на див в котором будут checkbox
+
+        services = await responseServices.json();
+
+        //Добавление содержимого в модальное окно пациентов, при добавлении доктора
+        for (let i = 0; i < services.length; i++) {
+            let checkboxId = `serviceCheckbox: ${services[i].Id}`;
+
+            let checkBoxService = document.createElement("input");
+            checkBoxService.id = checkboxId;
+            checkBoxService.value = services[i].Id;
+            checkBoxService.className = "servicesCheckbox"
+            checkBoxService.type = "checkbox"
+
+            let checkBoxServiceLabel = document.createElement("label");
+            checkBoxServiceLabel.textContent = `${services[i].ServiceName} ${services[i].Price}.`
+            checkBoxServiceLabel.for = checkboxId;
+
+
+            modal.appendChild(checkBoxService);
+            modal.appendChild(checkBoxServiceLabel);
+        }
+
+        //Есть ли у предыдущего контейнера дочерние элементы, и выставляем значения checkbox
+        if (prevCheckboxesContainerClone.hasChildNodes()) {
+            for (let i = 0; i < prevCheckboxesContainerClone.childNodes.length - 1; i++) {
+                if (prevCheckboxesContainerClone.childNodes[i].nodeName == "LABEL") {
+                    continue;
+                }
+                let tempCheckBox = document.getElementById(prevCheckboxesContainerClone.childNodes[i].id);
+
+                tempCheckBox.checked = prevCheckboxesContainerClone.childNodes[i].checked;
+            }
+        }
+    }
     //Создаём область с кнопкой сокрытия
     let servicesModalEvents = document.createElement("div");
     servicesModalEvents.className = "modal__buttons";
@@ -318,7 +445,6 @@ function hideCreatePatientsModal() {
     const modal = document.getElementById("doctorPatientsModal")
     modal.style.display = "none";
 }
-
 
 // Функция получения пациентов и отображения их в модальном окне
 async function readDoctorPatients(doctor) {
