@@ -67,6 +67,7 @@ namespace ReceptionOfPatients
             {
                 result.Services.Add(new Service()
                 {
+                    Id = service.Id,
                     Price = service.Price,
                     ServiceName = service.ServiceName,
                 });

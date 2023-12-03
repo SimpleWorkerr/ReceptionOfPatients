@@ -42,7 +42,7 @@ namespace ReceptionOfPatients
 
         public List<Doctor> Read(AppContext context)
         {
-            var tempValue = context.Doctors.Include(doc => doc.Patients).ToList();
+            var tempValue = context.Doctors.Include(doc => doc.Patients).Include(doc => doc.Services).ToList();
 
             List<Doctor> result = new List<Doctor>();
 
