@@ -1,5 +1,7 @@
 ﻿
 
+using Npgsql.Replication;
+
 namespace ReceptionOfPatients
 {
     public class Service
@@ -19,6 +21,7 @@ namespace ReceptionOfPatients
 
             result.Id = Id;
             result.Price = Price;
+            result.ServiceName = ServiceName;
 
             foreach (var doctor in Doctors)
             {

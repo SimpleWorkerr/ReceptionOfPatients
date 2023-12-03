@@ -67,19 +67,41 @@ namespace ReceptionOfPatients
                 dbDoctor.OfficeNumber = value.OfficeNumber;
                 dbDoctor.StartWorkDate = value.StartWorkDate;
 
-                dbDoctor.Services.Clear();
-                dbDoctor.Patients.Clear();
 
-                var patientsList = context.Patients.ToList();
-                var serviceList = context.Services.ToList();
+                List<Patient> patientsRemove = new List<Patient>();
+                List<Patient> patientsAdd = new List<Patient>();
 
-                for (int i = 0; i < patientsList.Count(); i++)
-                    if (HasId(value.Patients, patientsList[i]))
-                        dbDoctor.Patients.Add(patientsList[i]);
+                foreach (var dbPatient in dbDoctor.Patients)
+                    if (!HasId(value.Patients, dbPatient))
+                        patientsRemove.Add(context.Patients.First((pat) => pat.Id == dbPatient.Id));
 
-                for(int i = 0; i < serviceList.Count(); i++)
-                    if(HasId(value.Services, serviceList[i]))
-                        dbDoctor.Services.Add(serviceList[i]);
+                foreach (var webPatient in value.Patients)
+                    if (!HasId(dbDoctor.Patients, webPatient))
+                        patientsAdd.Add(context.Patients.First((pat) => pat.Id == webPatient.Id));
+
+                foreach(var patient in patientsRemove)
+                    dbDoctor.Patients.Remove(patient);
+
+                foreach (var patient in patientsAdd)
+                    dbDoctor.Patients.Add(patient);
+
+
+                List<Service> servicesRemove = new List<Service>();
+                List<Service> servicesAdd = new List<Service>();
+
+                foreach (var dbService in dbDoctor.Services)
+                    if (!HasId(value.Services, dbService))
+                        servicesRemove.Add(context.Services.First((ser) => ser.Id == dbService.Id));
+
+                foreach (var webService in value.Services)
+                    if (!HasId(dbDoctor.Services, webService))
+                        servicesAdd.Add(context.Services.First((ser) => ser.Id == webService.Id));
+
+                foreach (var service in servicesRemove)
+                    dbDoctor.Services.Remove(service);
+
+                foreach (var service in servicesAdd)
+                    dbDoctor.Services.Add(service);
 
                 context.SaveChanges();
             }

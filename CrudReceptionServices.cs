@@ -61,14 +61,14 @@ namespace ReceptionOfPatients
         {
             var receptionRes = context.Receptions.FirstOrDefault(rec => rec.Id == receptionId);
 
-            return receptionRes?.Doctor;
+            return receptionRes?.Doctor?.CreateJsonObject();
         }
 
         public Patient? GetPatientByReceptionId(AppContext context, int receptionId)
         {
             var receptionRes = context.Receptions.FirstOrDefault(rec => rec.Id == receptionId);
 
-            return receptionRes?.Patient;
+            return receptionRes?.Patient?.CreateJsonObject();
         }
     }
 }
