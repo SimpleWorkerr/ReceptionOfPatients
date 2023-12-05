@@ -1,80 +1,86 @@
 <!DOCTYPE html>
 <html lang="ru">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Doctor</title>
     <!-- Шрифты -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Стили -->
-    <link rel="stylesheet" href="../css/default.css">
-    <link rel="stylesheet" href="../css/doctor.css">
-</head>
+    <link rel="stylesheet" href="../css/default.css" />
+    <link rel="stylesheet" href="../css/doctor.css" />
+  </head>
 
-<body>
+  <body>
     <script defer src="../js/modal-window.js"></script>
     <script defer src="../js/app-doctor.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <!-- <script defer src="../js/modal-drag.js"></script> -->
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+    ></script>
 
     <div class="content">
+      <div class="content__header">
+        <h1 class="content__title">
+          <a class="content__title--link" href="../index.html"
+            >Reception of patients</a
+          >
+        </h1>
+        <nav class="content__menu">
+          <nav class="content__menu">
+            <a href="#" class="content__menu-link">Главная</a>
+            <a href="#" class="content__menu-link">Описание проекта</a>
+            <a href="#" class="content__menu-link">Ссылка на GitHub</a>
+          </nav>
+        </nav>
+      </div>
 
-        <div class="content__header">
-            <h1 class="content__title">
-                <a class="content__title--link" href="../index.html">Reception of patients</a>
-            </h1>
-            <nav class="content__menu">
-                <nav class="content__menu">
-                    <a href="#" class="content__menu-link">Главная</a>
-                    <a href="#" class="content__menu-link">Описание проекта</a>
-                    <a href="#" class="content__menu-link">Ссылка на GitHub</a>
-                </nav>
-
-            </nav>
+      <header class="header">
+        <div class="header__block header__block--doctors">
+          <h2 class="header__title">Доктора:</h2>
         </div>
-
-        <header class="header">
-            <div class="header__block header__block--doctors">
-                <h2 class="header__title">Доктора:</h2>
-            </div>
-            <div class="header__block header__block--filters">
-                <select id="doctorFilter" class="filter__select">
-                    <option value="all">Все специализации</option>
-                    <option value="therapist">Терапевт</option>
-                    <option value="surgeon">Хирург</option>
-                </select>
-            </div>
-        </header>
-
-        <main class="main">
-            <section class="doctor-cards" id="doctor-cards-id">
-                Загрузка ...
-            </section>
-        </main>
-
-        <footer class="footer">
-            <button class="footer__button footer__button--add" onclick="displayAddDoctorModal()">
-                Добавить доктора
-            </button>
-        </footer>
-
-        <!-- Модальное окно -->
-        <div class="modal" id="modal">
-            
+        <div class="header__block header__block--filters">
+          <select id="doctorFilter" class="filter__select">
+            <option value="all">Все специализации</option>
+            <option value="therapist">Терапевт</option>
+            <option value="surgeon">Хирург</option>
+          </select>
         </div>
+      </header>
 
-        <!-- Модальное окно для пациентов -->
-        <div class="modal" id="patientsModal"></div>
-        <!-- Окно для выборки пациентов-->
-        <div class="modal" id="doctorServicesModal"></div>
-        <!-- Окно для выборки услуг-->
-        <div class="modal" id="doctorPatientsModal"></div>
-        <!-- Оверлей -->
-        <div id="overlay"></div>
+      <main class="main">
+        <section class="doctor-cards" id="doctor-cards-id">
+          Загрузка ...
+        </section>
+      </main>
+
+      <footer class="footer">
+        <button
+          class="footer__button footer__button--add"
+          onclick="displayAddDoctorModal()"
+        >
+          Добавить доктора
+        </button>
+      </footer>
+
+      <!-- Модальное окно -->
+      <div class="modal" id="modal"></div>
+
+      <!-- Модальное окно для пациентов -->
+      <div class="modal" id="patientsModal"></div>
+      <!-- Окно для выборки пациентов-->
+      <div class="modal" id="doctorServicesModal"></div>
+      <!-- Окно для выборки услуг-->
+      <div class="modal" id="doctorPatientsModal"></div>
+      <!-- Оверлей -->
+      <div id="overlay"></div>
     </div>
-</body>
-
+  </body>
 </html>

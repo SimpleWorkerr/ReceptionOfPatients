@@ -272,7 +272,7 @@ body {
 .modal__buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .modal__buttons--saveData,
@@ -305,6 +305,12 @@ body {
   cursor: pointer;
 }
 
+.modal__actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
 @media (max-width: 768px) {
   .doctor-card {
     flex-basis: 100%;
@@ -320,31 +326,97 @@ body {
     font-size: 25px;
   }
 }
-
-/* Стили для модального окна пациентов */
-.modal__content {
-  max-height: 400px;
-  overflow-y: auto;
-  margin-bottom: 20px;
+/* Стили для модального окна с отображением пациентов доктора */
+#patientsModal {
+  /* position: absolute; */
+  /* top: 50%; */
+  /* left: 50%; */
+  background-color: var(--text-light-color);
+  border: 1px solid var(--primary-light-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  height: auto;
+  color: var(--text-dark-color);
+  transform: translate(-50%, -50%) scale(1);
+  font-size: 14px;
+  /* cursor: move; */
 }
 
-.modal__content table {
-  width: 100%;
+#patientsModal table {
   border-collapse: collapse;
+  margin-top: 20px;
+  table-layout: fixed;
+  /* margin-bottom: 10px; */
 }
 
-.modal__content th,
-.modal__content td {
+#patientsModal th,
+#patientsModal td {
+  text-align: center;
   border: 1px solid var(--primary-light-color);
   padding: 8px;
   text-align: left;
 }
 
-.modal__content th {
+#patientsModal th {
+  text-align: center;
+  padding: 20px;
   background-color: var(--primary-color);
   color: var(--text-light-color);
+  font-weight: 500;
 }
 
-.modal__content td {
-  background-color: var(--text-light-color);
+#patientsModal tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#patientsModal tr:hover {
+  transition: 0.5s;
+}
+
+#patientsModal tr:hover {
+  background-color: var(--primary-light-color);
+}
+
+#patientsModal td:first-child {
+  font-weight: 700;
+}
+
+#patientsModal th:nth-child(1),
+#patientsModal td:nth-child(1) {
+  width: 400px; /* Ширина первого столбца */
+}
+
+#patientsModal th:nth-child(2),
+#patientsModal td:nth-child(2) {
+  width: 15%; /* Ширина второго столбца */
+}
+
+#patientsModal th:nth-child(3),
+#patientsModal td:nth-child(3) {
+  width: 15%; /* Ширина третьего столбца */
+}
+
+#patientsModal th:nth-child(4),
+#patientsModal td:nth-child(4) {
+  width: 15%; /* Ширина четвертого столбца */
+}
+
+#patientsModal th:nth-child(5),
+#patientsModal td:nth-child(5) {
+  width: 20%; /* Ширина пятого столбца */
+}
+
+#patientsModal th:nth-child(6),
+#patientsModal td:nth-child(6) {
+  width: 20%; /* Ширина шестого столбца */
+}
+
+/* Скругление верхних углов */
+#patientsModal th:first-child {
+  border-top-left-radius: 8px; /* Скругление верхнего левого угла */
+}
+
+#patientsModal th:last-child {
+  border-top-right-radius: 8px; /* Скругление верхнего правого угла */
 }
