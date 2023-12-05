@@ -576,36 +576,34 @@ async function createPatientsModal(doctor = null) {
 async function createServicesModal(doctor = null) {
     const modal = document.getElementById("doctorServicesModal");
 
-    let prevCheckboxesContainerClone = document
-        .getElementById("doctorServicesModal")
-        .cloneNode(true);
+    let prevCheckboxesContainerClone = document.getElementById("doctorServicesModal").cloneNode(true);
 
     modal.innerHTML = "";
 
     const responseServices = await fetch("service?operation=read", {
         method: "post",
-        headers: { Accept: "application/json", "Content-Type": "application/json" },
+        headers: { "Accept": "application/json", "Content-Type": "application/json" }
     });
-    if (responseServices.status == 201) {
+    if (responseServices.status == 200) {
         //Получаем ссылку на див в котором будут checkbox
 
         services = await responseServices.json();
 
         if (doctor != null) {
-            for (let i = 1; i < services.length; i++) {
+            for (let i = 0; i < services.length; i++) {
                 let checkboxId = `serviceCheckbox: ${services[i].Id}`;
 
                 let checkBoxService = document.createElement("input");
                 checkBoxService.id = checkboxId;
                 checkBoxService.value = services[i].Id;
-                checkBoxService.className = "servicesCheckbox";
-                checkBoxService.type = "checkbox";
+                checkBoxService.className = "servicesCheckbox"
+                checkBoxService.type = "checkbox"
 
                 let checkBoxServiceLabel = document.createElement("label");
-                checkBoxServiceLabel.textContent = `${services[i].ServiceName} ${services[i].Price}.`;
+                checkBoxServiceLabel.textContent = `${services[i].ServiceName} ${services[i].Price}.`
                 checkBoxServiceLabel.for = checkboxId;
 
-                for (let j = 1; j < doctor.Services.length; j++) {
+                for (let j = 0; j < doctor.Services.length; j++) {
                     if (services[i].Id == doctor.Services[j].Id) {
                         checkBoxService.checked = true;
                     }
@@ -614,19 +612,20 @@ async function createServicesModal(doctor = null) {
                 modal.appendChild(checkBoxService);
                 modal.appendChild(checkBoxServiceLabel);
             }
-        } else {
+        }
+        else {
             //Добавление содержимого в модальное окно пациентов, при добавлении доктора
-            for (let i = 1; i < services.length; i++) {
+            for (let i = 0; i < services.length; i++) {
                 let checkboxId = `serviceCheckbox: ${services[i].Id}`;
 
                 let checkBoxService = document.createElement("input");
                 checkBoxService.id = checkboxId;
                 checkBoxService.value = services[i].Id;
-                checkBoxService.className = "servicesCheckbox";
-                checkBoxService.type = "checkbox";
+                checkBoxService.className = "servicesCheckbox"
+                checkBoxService.type = "checkbox"
 
                 let checkBoxServiceLabel = document.createElement("label");
-                checkBoxServiceLabel.textContent = `${services[i].ServiceName} ${services[i].Price}.`;
+                checkBoxServiceLabel.textContent = `${services[i].ServiceName} ${services[i].Price}.`
                 checkBoxServiceLabel.for = checkboxId;
 
                 modal.appendChild(checkBoxService);
@@ -635,20 +634,13 @@ async function createServicesModal(doctor = null) {
 
             //Есть ли у предыдущего контейнера дочерние элементы, и выставляем значения checkbox
             if (prevCheckboxesContainerClone.hasChildNodes()) {
-                for (
-                    let i = 1;
-                    i < prevCheckboxesContainerClone.childNodes.length - 2;
-                    i++
-                ) {
+                for (let i = 0; i < prevCheckboxesContainerClone.childNodes.length - 1; i++) {
                     if (prevCheckboxesContainerClone.childNodes[i].nodeName == "LABEL") {
                         continue;
                     }
-                    let tempCheckBox = document.getElementById(
-                        prevCheckboxesContainerClone.childNodes[i].id
-                    );
+                    let tempCheckBox = document.getElementById(prevCheckboxesContainerClone.childNodes[i].id);
 
-                    tempCheckBox.checked =
-                        prevCheckboxesContainerClone.childNodes[i].checked;
+                    tempCheckBox.checked = prevCheckboxesContainerClone.childNodes[i].checked;
                 }
             }
         }
@@ -660,14 +652,15 @@ async function createServicesModal(doctor = null) {
     let hideServicesBtn = document.createElement("button");
     hideServicesBtn.className = "modal__buttons--hideModal";
     hideServicesBtn.innerText = "Закрыть";
-    hideServicesBtn.addEventListener("click", () => hideCreateServicesModal());
+    hideServicesBtn.addEventListener("click", () => hideCreateServicesModal())
 
     servicesModalEvents.appendChild(hideServicesBtn);
 
     modal.appendChild(servicesModalEvents);
 
     modal.style.display = "block";
-    modal.style.opacity = "101";
+    modal.style.opacity = "100";
+
 }
 function hideCreateServicesModal() {
     const modal = document.getElementById("doctorServicesModal");
