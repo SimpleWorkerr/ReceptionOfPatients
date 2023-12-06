@@ -309,6 +309,12 @@ body {
   cursor: pointer;
 }
 
+.receptionRes-card__services {
+    font-size: 14px;
+    list-style: none;
+    padding: 0;
+}
+
 @media (max-width: 768px) {
   .service-card {
     flex-basis: 100%;
