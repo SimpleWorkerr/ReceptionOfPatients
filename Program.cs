@@ -8,7 +8,7 @@
             using (AppContext appContext = new AppContext())
             {
 
-                //AddData();
+                AddData();
 
                 var builder = WebApplication.CreateBuilder(args);
                 builder.Services.AddTransient<CrudDoctorServices>();

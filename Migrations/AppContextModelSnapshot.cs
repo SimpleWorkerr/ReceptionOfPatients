@@ -112,6 +112,9 @@ namespace ReceptionOfPatients.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
+                    b.Property<int>("ReceptionResultId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("text");
@@ -162,17 +165,14 @@ namespace ReceptionOfPatients.Migrations
                     b.Property<string>("Decsription")
                         .HasColumnType("text");
 
-                    b.Property<string>("Diagnosis")
-                        .HasColumnType("text");
+                    b.Property<int>("DiagnozId")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("DoctorInfo")
-                        .HasColumnType("text");
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Medicines")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PatientInfo")
-                        .HasColumnType("text");
+                    b.Property<int>("PatientId")
+                        .HasColumnType("integer");
 
                     b.Property<int?>("ReceptionId")
                         .HasColumnType("integer");
@@ -180,10 +180,13 @@ namespace ReceptionOfPatients.Migrations
                     b.Property<string>("Recomendation")
                         .HasColumnType("text");
 
-                    b.Property<string>("UsesServices")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("DiagnozId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("ReceptionResults");
                 });
@@ -206,6 +209,38 @@ namespace ReceptionOfPatients.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("ReceptionOfPatients.wwwroot.css.Diagnoz", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Diagnozs");
+                });
+
+            modelBuilder.Entity("ReceptionResultService", b =>
+                {
+                    b.Property<int>("ReceptionResultsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ServicesId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ReceptionResultsId", "ServicesId");
+
+                    b.HasIndex("ServicesId");
+
+                    b.ToTable("ReceptionResultService");
                 });
 
             modelBuilder.Entity("DoctorService", b =>
@@ -263,19 +298,70 @@ namespace ReceptionOfPatients.Migrations
                     b.Navigation("ReceptionResult");
                 });
 
+            modelBuilder.Entity("ReceptionOfPatients.ReceptionResult", b =>
+                {
+                    b.HasOne("ReceptionOfPatients.wwwroot.css.Diagnoz", "Diagnoz")
+                        .WithMany("Results")
+                        .HasForeignKey("DiagnozId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ReceptionOfPatients.Doctor", "Doctor")
+                        .WithMany("ReceptionResult")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ReceptionOfPatients.Patient", "Patient")
+                        .WithMany("ReceptionResult")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Diagnoz");
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("ReceptionResultService", b =>
+                {
+                    b.HasOne("ReceptionOfPatients.ReceptionResult", null)
+                        .WithMany()
+                        .HasForeignKey("ReceptionResultsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ReceptionOfPatients.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServicesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ReceptionOfPatients.Doctor", b =>
                 {
+                    b.Navigation("ReceptionResult");
+
                     b.Navigation("Receptions");
                 });
 
             modelBuilder.Entity("ReceptionOfPatients.Patient", b =>
                 {
+                    b.Navigation("ReceptionResult");
+
                     b.Navigation("Receptions");
                 });
 
             modelBuilder.Entity("ReceptionOfPatients.ReceptionResult", b =>
                 {
                     b.Navigation("Reception");
+                });
+
+            modelBuilder.Entity("ReceptionOfPatients.wwwroot.css.Diagnoz", b =>
+                {
+                    b.Navigation("Results");
                 });
 #pragma warning restore 612, 618
         }

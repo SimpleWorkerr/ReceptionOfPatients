@@ -11,10 +11,14 @@ namespace ReceptionOfPatients
         public DateTime BirthDate { get; set; }
         public string Address { get; set; } = null!;
         public string? PhoneNumber { get; set; }
+        public int ReceptionResultId { get; set; }
+        public List<ReceptionResult?> ReceptionResult { get; set; } = new();
+
 
         public List<Doctor> Doctors { get; set; } = new();
         public List<Reception> Receptions { get; set; } = new();
         public List<Service?> Services { get; set; } = new();
+
 
         public override string ToString()
         {

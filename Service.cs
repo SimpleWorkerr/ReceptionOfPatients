@@ -14,6 +14,7 @@ namespace ReceptionOfPatients
 
         public List<Doctor?> Doctors { get; set; } = new();
         public List<Patient?> Patients { get; set; } = new();
+        public List<ReceptionResult?> ReceptionResults { get; set; } = new();
 
         public Service CreateJsonObject()
         {
@@ -49,6 +50,11 @@ namespace ReceptionOfPatients
                     PhoneNumber = patient?.PhoneNumber ?? ""
                 });
             }
+            foreach (var resResult in ReceptionResults)
+            {
+                result.ReceptionResults.Add(resResult);
+            }
+
 
             return result;
         }

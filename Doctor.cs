@@ -16,6 +16,8 @@ namespace ReceptionOfPatients
         public List<Reception> Receptions { get; set; } = new();
         public List<Service> Services { get; set; } = new();
 
+        public List<ReceptionResult?> ReceptionResult { get; set; } = new();
+
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -73,6 +75,9 @@ namespace ReceptionOfPatients
                 });
             }
 
+            foreach(var resResult in ReceptionResult)
+                result.ReceptionResult.Add(resResult?.CreateJsonObject());
+    
             return result;
         }
     }
