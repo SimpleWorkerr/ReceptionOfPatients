@@ -125,9 +125,7 @@ async function changeDoctor(doctor) {
     const doctorFIO = document.getElementById("doctorFIO").value;
     const doctorRoom = document.getElementById("doctorRoom").value;
     const doctorWorkStart = document.getElementById("doctorWorkStart").value;
-    const doctorSpecialization = document.getElementById(
-        "doctorSpecialization"
-    ).value;
+    const doctorSpecialization = document.getElementById("doctorSpecialization").value;
 
     let fioArray = doctorFIO.split(" ");
 
@@ -242,8 +240,8 @@ async function displayChangeDoctor(doctor) {
     let doctorSaveData = document.createElement("button");
     doctorSaveData.className = "modal__buttons--saveData";
     doctorSaveData.textContent = "Изменить";
-    doctorSaveData.addEventListener("click", () => {
-        changeDoctor(doctor);
+    doctorSaveData.addEventListener("click", async () => {
+        await changeDoctor(doctor);
     });
 
     let doctorCancel = document.createElement("button");

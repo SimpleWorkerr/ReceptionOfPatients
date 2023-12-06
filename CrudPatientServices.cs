@@ -49,8 +49,24 @@ namespace ReceptionOfPatients
                 dbPatient.PhoneNumber = value.PhoneNumber;
                 dbPatient.BirthDate = value.BirthDate;
 
-                context.SaveChanges();
+                List<Doctor> doctorsRemove = new List<Doctor>();
+                List<Doctor> doctorsAdd = new List<Doctor>();
 
+                foreach (var dbDoctor in dbPatient.Doctors)
+                    if (!HasId(value.Doctors, dbDoctor))
+                        doctorsRemove.Add(context.Doctors.First((doc) => doc.Id == dbDoctor.Id));
+
+                foreach (var webDoctor in value.Doctors)
+                    if (!HasId(dbPatient.Doctors, webDoctor))
+                        doctorsAdd.Add(context.Doctors.First((doc) => doc.Id == webDoctor.Id));
+
+                foreach(var doctor in doctorsRemove)
+                    dbPatient.Doctors.Remove(doctor);
+
+                foreach (var doctor in doctorsAdd)
+                    dbPatient.Doctors.Add(doctor);
+
+                context.SaveChanges();
             }
         }
 
@@ -68,6 +84,17 @@ namespace ReceptionOfPatients
             }
 
             return result.ToList();
+        }
+
+        private bool HasId(List<Doctor> doctors, Doctor doctor)
+        {
+            foreach (var tempPatient in doctors)
+            {
+                if (tempPatient.Id == doctor.Id)
+                    return true;
+            }
+
+            return false;
         }
     }
 }

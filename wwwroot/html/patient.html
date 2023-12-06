@@ -68,19 +68,18 @@
 
         <!-- Модальное окно -->
         <div class="modal" id="modal">
-            <input type="text" placeholder="ФИО" id="name">
-            <input type="text" placeholder="Адрес" id="adress">
-            <input type="text" placeholder="Номер телефона" id="tel">
-            <input type="date" placeholder="Дата рождения" id="birthdate">
+            <input type="text" placeholder="ФИО" id="patientFIO">
+            <input type="text" placeholder="Адрес" id="patientAddress">
+            <input type="text" placeholder="Номер телефона" id="patientPhoneNumber">
+            <input type="date" placeholder="Дата рождения" id="patientBirthdate">
             <div class="modal__buttons">
                 <button class="modal__buttons--saveData" onclick="saveData()">Сохранить</button>
                 <button class="modal__buttons--hideModal" onclick="hideModal()">Отменить</button>
             </div>
         </div>
         <!-- Модельное окно для докторов-->
-        <div class="modal" id="doctorsModal">
-
-        </div>
+        <div class="modal" id="doctorsModal"></div>
+        <div class="modal" id="patientDoctorsModal"></div>
 
         <!-- Оверлей -->
         <div id="overlay"></div>
