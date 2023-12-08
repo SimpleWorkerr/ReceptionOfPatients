@@ -46,16 +46,7 @@ namespace ReceptionOfPatients
 
             foreach (var doctor in Doctors)
             {
-                result.Doctors.Add(new Doctor()
-                {
-                    Id = doctor.Id,
-                    Name = doctor.Name,
-                    Surname = doctor.Surname,
-                    FatherName = doctor.FatherName,
-                    OfficeNumber = doctor.OfficeNumber,
-                    Specialization = doctor.Specialization,
-                    StartWorkDate = doctor.StartWorkDate
-                });
+                result.Doctors.Add(doctor.CreateJsonObject());
             }
             foreach (var reception in Receptions)
             {

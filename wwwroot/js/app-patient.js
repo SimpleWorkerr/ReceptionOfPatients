@@ -237,11 +237,11 @@ async function createDoctorModal(patient = null) {
                 checkBoxDoctor.type = "checkbox"
 
                 let checkBoxDoctorLabel = document.createElement("label");
-                checkBoxDoctorLabel.textContent = `${patient.Surname} ${patient.Name[0]}. ${patient.FatherName[0]}.`;
+                checkBoxDoctorLabel.textContent = `${doctors[i].Surname} ${doctors[i].Name[0]}. ${doctors[i].FatherName[0]}.`;
                 checkBoxDoctorLabel.for = checkBoxId;
 
                 for (let j = 0; j < patient.Doctors.length; j++) {
-                    if (doctors[i].Id == patient.Doctors[i].Id) {
+                    if (doctors[i].Id == patient.Doctors[j].Id) {
                         checkBoxDoctor.checked = true;
                     }
                 }
