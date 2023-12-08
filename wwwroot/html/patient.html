@@ -45,37 +45,19 @@
         <main class="main">
             <section class="patient-cards" id="patient-cards-id">
                 <div class="patient-card">
-                    <div class="patient-card__info">
-                        <h3 class="patient-card__name">Иванов Роман Николевич</h3>
-                        <p class="patient-card__detail">Адрес: Пушкина 23а</p>
-                        <p class="patient-card__detail">Номер телефона: +79843467895</p>
-                        <p class="patient-card__detail">Дата рождения: 23.06.1990</p>
-                    </div>
-                    <div class="patient-card__actions">
-                        <button onclick="" class="patient-card__button patient-card__button--doctors">Доктора</button>
-                        <button onclick="" class="patient-card__button patient-card__button--edit">Изменить</button>
-                        <button onclick="" class="patient-card__button patient-card__button--delete">Удалить</button>
-                    </div>
+                    Загрузка ...
                 </div>
             </section>
         </main>
 
         <footer class="footer">
-            <button class="footer__button footer__button--add" onclick="showModal()">
+            <button class="footer__button footer__button--add" onclick="displayAddPatient()">
                 Добавить пациента
             </button>
         </footer>
 
         <!-- Модальное окно -->
         <div class="modal" id="modal">
-            <input type="text" placeholder="ФИО" id="patientFIO">
-            <input type="text" placeholder="Адрес" id="patientAddress">
-            <input type="text" placeholder="Номер телефона" id="patientPhoneNumber">
-            <input type="date" placeholder="Дата рождения" id="patientBirthdate">
-            <div class="modal__buttons">
-                <button class="modal__buttons--saveData" onclick="saveData()">Сохранить</button>
-                <button class="modal__buttons--hideModal" onclick="hideModal()">Отменить</button>
-            </div>
         </div>
         <!-- Модельное окно для докторов-->
         <div class="modal" id="doctorsModal"></div>

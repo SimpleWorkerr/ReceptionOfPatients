@@ -8,7 +8,20 @@ namespace ReceptionOfPatients
         {
             if (value != null)
             {
-                context.Patients.AddRange(value);
+                Patient dbPatient = new Patient()
+                {
+                    Name = value.Name,
+                    Surname = value.Surname,
+                    FatherName = value.FatherName,
+                    Address = value.Address,
+                    BirthDate = value.BirthDate,
+                    PhoneNumber = value.PhoneNumber
+                };
+
+                foreach(var doctor in value.Doctors)
+                    dbPatient.Doctors.Add(context.Doctors.First(doc => doc.Id == doctor.Id));
+
+                context.Patients.Add(dbPatient);
 
                 context.SaveChanges();
             }
