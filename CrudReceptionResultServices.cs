@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace ReceptionOfPatients
 {
@@ -20,9 +21,11 @@ namespace ReceptionOfPatients
 
         public List<ReceptionResult> Read(AppContext context)
         {
-            var tempValue = context.ReceptionResults;
+            var tempValue = (from rec in context.ReceptionResults.Include(rec => rec.Services).Include(rec => rec.Patient).Include(rec => rec.Doctor) select rec.CreateJsonObject()).ToList();
 
-            return tempValue.ToList();
+            Console.WriteLine(JsonSerializer.Serialize(tempValue, new JsonSerializerOptions() { WriteIndented = true}));
+
+            return tempValue;
         }
 
         public void Update(AppContext context, ReceptionResult? value)

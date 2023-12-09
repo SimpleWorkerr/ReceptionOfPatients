@@ -12,7 +12,7 @@ using ReceptionOfPatients;
 namespace ReceptionOfPatients.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20231209115944_INITIAL")]
+    [Migration("20231209121506_INITIAL")]
     partial class INITIAL
     {
         /// <inheritdoc />

@@ -27,7 +27,7 @@ namespace ReceptionOfPatients
 
         public List<Service> Read(AppContext context)
         {
-            var tempValue = context.Services.ToList();
+            var tempValue = context.Services.Include(serv => serv.Patients).Include(serv => serv.Doctors);
 
             List<Service> result = new List<Service>();
 

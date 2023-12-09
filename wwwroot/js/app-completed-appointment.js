@@ -20,7 +20,6 @@ async function loadDataCompletAppoint() {
         //Добавление карточки
         for (let i = 0; i < completeAppointment.length; i++) {
             completed_apointment_card.appendChild(await createCompAppointCard(completeAppointment[i]));
-            //console.log(JSON.stringify(completeAppointment[i]));
         }
     }
 }
@@ -33,10 +32,14 @@ async function createCompAppointCard(receptionRes) {
     const cardInfo = document.createElement("div");
     cardInfo.className = "service-card__info";
     //ФИО Пациента
+    const patientFIOHeader = document.createElement("h3");
+    patientFIOHeader.textContent = "Пациент"
     const patientFIO = document.createElement("p");
     patientFIO.className = "service-card__detail";
     patientFIO.textContent = `Пациент: ${receptionRes.Patient.Surname} ${receptionRes.Patient.Name} ${receptionRes.Patient.FatherName}`;
     //ФИО доктора
+    const doctorFIOHeader = document.createElement("h3");
+    doctorFIOHeader.textContent = "Доктор"
     const doctorFIO = document.createElement("p");
     doctorFIO.className = "service-card__detail";
     doctorFIO.textContent = `Доктор:${receptionRes.Doctor.Surname} ${receptionRes.Doctor.Name} ${receptionRes.Doctor.FatherName}`;
@@ -52,7 +55,7 @@ async function createCompAppointCard(receptionRes) {
     const deleteReceptionResult = document.createElement("button");
     deleteReceptionResult.className = "service-card__button service-card__button--delete";
     deleteReceptionResult.addEventListener("click", async () => {
-        removeReceptionRec(receptionRes);
+        await removeReceptionRec(receptionRes);
         await loadDataCompletAppoint();
     });    
     deleteReceptionResult.textContent = "Удалить";
@@ -65,7 +68,9 @@ async function createCompAppointCard(receptionRes) {
     cardReceptionActions.appendChild(deleteReceptionResult);
 
     //Собираем блок информации о пациенте
+    cardInfo.appendChild(patientFIOHeader);
     cardInfo.appendChild(patientFIO);
+    cardInfo.appendChild(doctorFIOHeader);
     cardInfo.appendChild(doctorFIO);
     cardInfo.appendChild(servicesHeader);
     cardInfo.appendChild(receptionServices);
@@ -90,12 +95,29 @@ function createListReceptionService(receptionRes) {
 }
 
 async function removeReceptionRec(receptionRec) {
-    let url = "/receptionResult?operation=delete";
-    fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(receptionRec.Id),
-    }).then((response) => console.log(response));
+    const url = "/receptionResult?operation=delete";
+
+    const confirmation = confirm("Вы уверены, что хотите удалить результат приёма?");
+
+    if (!confirmation) {
+        return;
+    }
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(receptionRec.Id),
+        });
+
+        if (response.ok) {
+            await loadDataCompletAppoint();
+        } else {
+            throw new Error("Ошибка удаления результата приёма");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Произошла ошибка при удалении результата приёма");
+    }
 }

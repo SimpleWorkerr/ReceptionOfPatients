@@ -28,9 +28,6 @@ namespace ReceptionOfPatients
         {
             if (value != null)
             {
-
-                //Console.WriteLine(JsonSerializer.Serialize(value, new JsonSerializerOptions() { WriteIndented = true }));
-
                 ReceptionResult dbReceptionResult = new ReceptionResult()
                 {
                     Decsription = value.Decsription,
@@ -56,7 +53,7 @@ namespace ReceptionOfPatients
 
         public List<Reception> Read(AppContext context)
         {
-            var tempValue = context.Receptions;
+            var tempValue = context.Receptions.Include(rec => rec.Patient).Include(rec => rec.Doctor);
 
             List<Reception> result = new List<Reception>();
 

@@ -50,10 +50,10 @@ namespace ReceptionOfPatients
                     PhoneNumber = patient?.PhoneNumber ?? ""
                 });
             }
-            foreach (var resResult in ReceptionResults)
-            {
-                result.ReceptionResults.Add(resResult);
-            }
+            //foreach (var resResult in ReceptionResults)
+            //{
+            //    result.ReceptionResults.Add(resResult);
+            //}
 
 
             return result;

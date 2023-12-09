@@ -75,8 +75,8 @@ namespace ReceptionOfPatients
                 });
             }
 
-            foreach(var resResult in ReceptionResult)
-                result.ReceptionResult.Add(resResult?.CreateJsonObject());
+            //foreach(var resResult in ReceptionResult)
+            //    result.ReceptionResult.Add(resResult?.CreateJsonObject());
     
             return result;
         }

@@ -14,7 +14,6 @@ async function loadDataCurrAppoint() {
         let reception_cards = document.getElementById("service-cards-id");
         reception_cards.innerHTML = "";
         receptions = await responseReceptions.json();
-        console.log(receptions);
         //Добавление карточек
         for (let i = 0; i < receptions.length; i++) {
             reception_cards.appendChild(await createReceptionCardElement(receptions[i]));
@@ -192,8 +191,8 @@ async function displayFinishReception(reception) {
     let recpetionFinishBtn = document.createElement("button");
     recpetionFinishBtn.className = "modal__buttons--saveData";
     recpetionFinishBtn.textContent = "Завершить";
-    recpetionFinishBtn.addEventListener("click", async () => {
-        await finishReception(reception);
+    recpetionFinishBtn.addEventListener("click", () => {
+        finishReception(reception);
     });
 
     let receptionCancelBtn = document.createElement("button");
@@ -203,7 +202,6 @@ async function displayFinishReception(reception) {
         const modalServices = document.getElementById("receptionResServices");
         modalServices.innerHTML = "";
         modalServices.style.display = "none";
-
 
         hideModal();
     });

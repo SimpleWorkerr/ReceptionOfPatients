@@ -14,12 +14,12 @@
 
 body {
   font-family: "Rubik", sans-serif;
-  background-color: var(--background-color);
-  /* background-image: url(/img/background-2.png);
+  /*background-color: var(--background-color);
+  background-image: url(/img/background-2.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; */
+  background-attachment: fixed;*/
 }
 
 .content {

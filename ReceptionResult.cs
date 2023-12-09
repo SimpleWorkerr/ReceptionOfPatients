@@ -33,6 +33,8 @@ namespace ReceptionOfPatients
             result.DoctorId = DoctorId;
             result.PatientId = PatientId;
             result.DiagnozId = DiagnozId;
+            result.Doctor = Doctor?.CreateJsonObject();
+            result.Patient = Patient?.CreateJsonObject();
             
             foreach(var resSercice in Services)
             {
