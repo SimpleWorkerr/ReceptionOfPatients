@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace ReceptionOfPatients
 {
@@ -27,7 +28,27 @@ namespace ReceptionOfPatients
         {
             if (value != null)
             {
-                context.ReceptionResults.AddRange(value);
+
+                //Console.WriteLine(JsonSerializer.Serialize(value, new JsonSerializerOptions() { WriteIndented = true }));
+
+                ReceptionResult dbReceptionResult = new ReceptionResult()
+                {
+                    Decsription = value.Decsription,
+                    Recomendation = value.Recomendation,
+                    Doctor = context.Doctors.First(doc => doc.Id == value.DoctorId),
+                    Patient = context.Patients.First(pat => pat.Id == value.PatientId),
+                };
+
+                foreach(var service in value.Services)
+                {
+                    if(service != null)
+                        dbReceptionResult.Services.Add(context.Services.First(serv => serv.Id == service.Id));
+                }
+
+
+                context.Receptions.Remove(context.Receptions.First(rec => rec.Id == value.ReceptionId));
+
+                context.ReceptionResults.Add(dbReceptionResult);
 
                 context.SaveChanges();
             }
@@ -53,7 +74,6 @@ namespace ReceptionOfPatients
             {
                 context.Receptions.UpdateRange(value);
                 context.SaveChanges();
-
             }
         }
 

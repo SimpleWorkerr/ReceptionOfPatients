@@ -12,7 +12,7 @@ using ReceptionOfPatients;
 namespace ReceptionOfPatients.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20231206033454_INITIAL")]
+    [Migration("20231209115944_INITIAL")]
     partial class INITIAL
     {
         /// <inheritdoc />
@@ -168,13 +168,13 @@ namespace ReceptionOfPatients.Migrations
                     b.Property<string>("Decsription")
                         .HasColumnType("text");
 
-                    b.Property<int>("DiagnozId")
+                    b.Property<int?>("DiagnozId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("DoctorId")
+                    b.Property<int?>("DoctorId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PatientId")
+                    b.Property<int?>("PatientId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("ReceptionId")
@@ -228,7 +228,7 @@ namespace ReceptionOfPatients.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Diagnozs");
+                    b.ToTable("Diagnoz");
                 });
 
             modelBuilder.Entity("ReceptionResultService", b =>
@@ -305,21 +305,15 @@ namespace ReceptionOfPatients.Migrations
                 {
                     b.HasOne("ReceptionOfPatients.wwwroot.css.Diagnoz", "Diagnoz")
                         .WithMany("Results")
-                        .HasForeignKey("DiagnozId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DiagnozId");
 
                     b.HasOne("ReceptionOfPatients.Doctor", "Doctor")
                         .WithMany("ReceptionResult")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DoctorId");
 
                     b.HasOne("ReceptionOfPatients.Patient", "Patient")
                         .WithMany("ReceptionResult")
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PatientId");
 
                     b.Navigation("Diagnoz");
 

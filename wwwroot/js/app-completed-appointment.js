@@ -7,7 +7,7 @@ loadDataCompletAppoint();
 //Тажке это main функция, для загрузки всех данных
 async function loadDataCompletAppoint() {
    
-  const responseAppoint = await fetch("receptionResult?operation=read", {
+    const responseAppoint = await fetch("receptionResult?operation=read", {
     method: "post",
     headers: { "Accept": "application/json", "Content-Type": "application/json" }
   });
@@ -20,6 +20,7 @@ async function loadDataCompletAppoint() {
         //Добавление карточки
         for (let i = 0; i < completeAppointment.length; i++) {
             completed_apointment_card.appendChild(await createCompAppointCard(completeAppointment[i]));
+            //console.log(JSON.stringify(completeAppointment[i]));
         }
     }
 }
@@ -32,12 +33,13 @@ async function createCompAppointCard(receptionRes) {
     const cardInfo = document.createElement("div");
     cardInfo.className = "service-card__info";
     //ФИО Пациента
-    const patientFIO = document.createElement("h3");
-    patientFIO.className = "service-card__name";
+    const patientFIO = document.createElement("p");
+    patientFIO.className = "service-card__detail";
     patientFIO.textContent = `Пациент: ${receptionRes.Patient.Surname} ${receptionRes.Patient.Name} ${receptionRes.Patient.FatherName}`;
     //ФИО доктора
     const doctorFIO = document.createElement("p");
     doctorFIO.className = "service-card__detail";
+    doctorFIO.textContent = `Доктор:${receptionRes.Doctor.Surname} ${receptionRes.Doctor.Name} ${receptionRes.Doctor.FatherName}`;
     //Создание списка услгу, которые бали оказаны на приёме
     //Создание заголовока для списка услуг
     const servicesHeader = document.createElement("h3");
@@ -49,9 +51,11 @@ async function createCompAppointCard(receptionRes) {
     //Кнопка удаления данных из бд
     const deleteReceptionResult = document.createElement("button");
     deleteReceptionResult.className = "service-card__button service-card__button--delete";
-    deleteReceptionResult.addEventListener(async () => {
-        await console.log("Кнопка удаления");
+    deleteReceptionResult.addEventListener("click", async () => {
+        removeReceptionRec(receptionRes);
+        await loadDataCompletAppoint();
     });    
+    deleteReceptionResult.textContent = "Удалить";
 
     //Собираем карточку полностью
     card.appendChild(cardInfo);
@@ -65,6 +69,8 @@ async function createCompAppointCard(receptionRes) {
     cardInfo.appendChild(doctorFIO);
     cardInfo.appendChild(servicesHeader);
     cardInfo.appendChild(receptionServices);
+
+    return card;
 }
 
 //Функция создания списка услуг
@@ -81,4 +87,15 @@ function createListReceptionService(receptionRes) {
     }
 
     return serviceList;
+}
+
+async function removeReceptionRec(receptionRec) {
+    let url = "/receptionResult?operation=delete";
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(receptionRec.Id),
+    }).then((response) => console.log(response));
 }

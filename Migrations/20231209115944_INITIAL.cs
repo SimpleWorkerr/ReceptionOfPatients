@@ -13,7 +13,7 @@ namespace ReceptionOfPatients.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Diagnozs",
+                name: "Diagnoz",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -22,7 +22,7 @@ namespace ReceptionOfPatients.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Diagnozs", x => x.Id);
+                    table.PrimaryKey("PK_Diagnoz", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,32 +84,29 @@ namespace ReceptionOfPatients.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Decsription = table.Column<string>(type: "text", nullable: true),
                     Recomendation = table.Column<string>(type: "text", nullable: true),
-                    DoctorId = table.Column<int>(type: "integer", nullable: false),
-                    PatientId = table.Column<int>(type: "integer", nullable: false),
+                    DoctorId = table.Column<int>(type: "integer", nullable: true),
+                    PatientId = table.Column<int>(type: "integer", nullable: true),
                     ReceptionId = table.Column<int>(type: "integer", nullable: true),
-                    DiagnozId = table.Column<int>(type: "integer", nullable: false)
+                    DiagnozId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ReceptionResults", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ReceptionResults_Diagnozs_DiagnozId",
+                        name: "FK_ReceptionResults_Diagnoz_DiagnozId",
                         column: x => x.DiagnozId,
-                        principalTable: "Diagnozs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "Diagnoz",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ReceptionResults_Doctors_DoctorId",
                         column: x => x.DoctorId,
                         principalTable: "Doctors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ReceptionResults_Patients_PatientId",
                         column: x => x.PatientId,
                         principalTable: "Patients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -281,7 +278,7 @@ namespace ReceptionOfPatients.Migrations
                 name: "ReceptionResults");
 
             migrationBuilder.DropTable(
-                name: "Diagnozs");
+                name: "Diagnoz");
 
             migrationBuilder.DropTable(
                 name: "Doctors");

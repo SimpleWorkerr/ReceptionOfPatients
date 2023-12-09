@@ -10,15 +10,15 @@ namespace ReceptionOfPatients
         public string? Decsription { get; set; }
         public string? Recomendation { get; set; }
 
-        public int DoctorId { get; set; }
+        public int? DoctorId { get; set; }
         public Doctor? Doctor { get; set; }
-        public int PatientId { get; set; }
+        public int? PatientId { get; set; }
         public Patient? Patient { get; set; }
 
         public int? ReceptionId { get; set; }
         public Reception? Reception { get; set; }
 
-        public int DiagnozId { get; set; }
+        public int? DiagnozId { get; set; }
         public Diagnoz? Diagnoz { get; set; }
 
         public List<Service?> Services { get; set; } = new();
@@ -33,9 +33,6 @@ namespace ReceptionOfPatients
             result.DoctorId = DoctorId;
             result.PatientId = PatientId;
             result.DiagnozId = DiagnozId;
-            result.Diagnoz = Diagnoz;///
-            result.Doctor = Doctor?.CreateJsonObject();
-            result.Patient = Patient?.CreateJsonObject();
             
             foreach(var resSercice in Services)
             {
