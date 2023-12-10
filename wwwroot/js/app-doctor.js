@@ -48,7 +48,7 @@ async function createDoctorCardElement(doctor) {
     //const formattedDate = moment(doctor.StartWorkDate).format("MMM Do YY");
     const doctorStartWorkDate = document.createElement("p");
     doctorStartWorkDate.className = "doctor-card__detail";
-    doctorStartWorkDate.textContent = `${doctor.StartWorkDate}`;
+    doctorStartWorkDate.textContent = `${doctor.StartWorkDate.slice(0, 10) }`;
     //Специализация доктора
     const doctorSpecialization = document.createElement("p");
     doctorSpecialization.className = "doctor-card__detail";
@@ -211,7 +211,7 @@ async function displayChangeDoctor(doctor) {
     let doctorWorkStart = document.createElement("input");
     doctorWorkStart.id = "doctorWorkStart";
     doctorWorkStart.type = "text";
-    doctorWorkStart.value = `${doctor.StartWorkDate}`;
+    doctorWorkStart.value = `${doctor.StartWorkDate.slice(0, 10)}`;
 
     let doctorSpecialization = document.createElement("input");
     doctorSpecialization.id = "doctorSpecialization";
@@ -778,7 +778,7 @@ function createTableRow(patient) {
     patientFatherName.textContent = `${patient.FatherName}`;
 
     let patientBirthDate = document.createElement("td");
-    patientBirthDate.textContent = `${patient.BirthDate}`;
+    patientBirthDate.textContent = `${patient.BirthDate.slice(0, 10)}`;
 
     let patientAddress = document.createElement("td");
     patientAddress.textContent = `${patient.Address}`;

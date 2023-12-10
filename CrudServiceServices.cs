@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ReceptionOfPatients
 {
@@ -86,6 +88,9 @@ namespace ReceptionOfPatients
                     break;
                 }
             }
+
+            Console.Write(JsonSerializer.Serialize(patRes, new JsonSerializerOptions() { WriteIndented = true}));
+
             return patRes;
         }
     }

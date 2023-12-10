@@ -1,326 +1,515 @@
 :root {
-  --primary-color: #5687c0;
-  --primary-light-color: #c7dcf1;
-  --primary-dark-color: #275392;
-  --button-edit-color: #75b9b5;
-  --button-delete-color: #dc6d6d;
-  --button-services-color: #63c6a7;
-  --secondary-color: #afeeeb;
-  --secondary-dark-color: #75b9b5;
-  --text-dark-color: #161717;
-  --text-light-color: #f4f5f8;
-  --background-color: #f5f5f5;
+    --primary-color: #5687c0;
+    --primary-light-color: #c7dcf1;
+    --primary-dark-color: #275392;
+    --button-edit-color: #75b9b5;
+    --button-delete-color: #dc6d6d;
+    --button-services-color: #63c6a7;
+    --secondary-color: #afeeeb;
+    --secondary-dark-color: #75b9b5;
+    --text-dark-color: #161717;
+    --text-light-color: #f4f5f8;
+    --background-color: #f5f5f5;
 }
 
 body {
-  font-family: "Rubik", sans-serif;
-  background-color: var(--background-color);
+    font-family: "Rubik", sans-serif;
+    background-color: var(--background-color);
 }
 
 .content {
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px;
 }
 
 .content__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
 }
 
 .content__menu {
-  display: flex;
-  gap: 25px;
+    display: flex;
+    gap: 25px;
 }
 
 .content__menu-link {
-  text-decoration: none;
-  color: var(--primary-color);
-  font-size: 16px;
-  transition: color 0.3s;
+    text-decoration: none;
+    color: var(--primary-color);
+    font-size: 16px;
+    transition: color 0.3s;
 }
 
-.content__menu-link:hover {
-  color: var(--primary-dark-color);
-}
+    .content__menu-link:hover {
+        color: var(--primary-dark-color);
+    }
 
 .content__title {
-  text-align: center;
-  font-size: 35px;
+    text-align: center;
+    font-size: 35px;
 }
 
 .content__title--link {
-  text-decoration: none;
-  color: var(--text-dark-color);
-  transition: 0.5s;
+    text-decoration: none;
+    color: var(--text-dark-color);
+    transition: 0.5s;
 }
 
-.content__title--link:hover {
-  text-decoration: none;
-  color: var(--primary-dark-color);
-}
+    .content__title--link:hover {
+        text-decoration: none;
+        color: var(--primary-dark-color);
+    }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
 }
 
 .header__title {
-  padding: 10px 5px;
-  color: var(--text-dark-color);
+    padding: 10px 5px;
+    color: var(--text-dark-color);
 }
 
 .header__block {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .filter__select {
-  -webkit-appearance: none; /* Для Safari и Chrome */
-  -moz-appearance: none; /* Для Firefox */
-  appearance: none;
-  background-color: var(--background-color);
-  border: none;
-  border-radius: 4px;
-  padding: 10px 5px;
-  font-size: 16px;
-  font-weight: 700;
-  text-align-last: center;
-  color: var(--primary-color);
-  cursor: pointer;
-  outline: none;
-  transition: color 0.3s;
+    -webkit-appearance: none; /* Для Safari и Chrome */
+    -moz-appearance: none; /* Для Firefox */
+    appearance: none;
+    background-color: var(--background-color);
+    border: none;
+    border-radius: 4px;
+    padding: 10px 5px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align-last: center;
+    color: var(--primary-color);
+    cursor: pointer;
+    outline: none;
+    transition: color 0.3s;
 }
 
-.filter__select:hover {
-  color: var(--primary-dark-color);
-}
+    .filter__select:hover {
+        color: var(--primary-dark-color);
+    }
 
-.filter__select:focus {
-  border-color: var(--primary-light-color);
-}
+    .filter__select:focus {
+        border-color: var(--primary-light-color);
+    }
 
 .service-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
 }
 
 .service-card {
-  flex-basis: calc(50% - 5px);
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  background-color: var(--text-light-color);
-  border: 1px solid var(--primary-light-color);
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex-basis: calc(50% - 5px);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--text-light-color);
+    border: 1px solid var(--primary-light-color);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .service-card__info {
-  color: var(--text-dark-color);
-  flex-grow: 1;
+    color: var(--text-dark-color);
+    flex-grow: 1;
 }
 
 .service-card__name {
-  font-size: 18px;
-  margin-bottom: 5px;
+    font-size: 18px;
+    margin-bottom: 5px;
 }
 
 .service-card__detail {
-  font-size: 14px;
-  color: var(--text-dark-color);
+    font-size: 14px;
+    color: var(--text-dark-color);
 }
 
 .service-card__services {
-  font-size: 14px;
-  list-style: none;
-  padding: 0;
+    font-size: 14px;
+    list-style: none;
+    padding: 0;
 }
 
 .service-card__services-title {
-  font-size: 16px;
-  color: var(--text-dark-color);
-  margin: 5px 0 0 0;
+    font-size: 16px;
+    color: var(--text-dark-color);
+    margin: 5px 0 0 0;
 }
 
 .service-card__actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
-  margin-left: 40px;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    margin-left: 40px;
+    gap: 10px;
 }
 
 .service-card__button {
-  width: 120px;
-  font-size: 14px;
-  color: var(--text-light-color);
-  border: none;
-  border-radius: 4px;
-  padding: 8px 10px;
-  cursor: pointer;
-  transition: filter 0.3s;
+    width: 120px;
+    font-size: 14px;
+    color: var(--text-light-color);
+    border: none;
+    border-radius: 4px;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: filter 0.3s;
 }
 
 .service-card__button--edit {
-  background-color: var(--button-edit-color);
+    background-color: var(--button-edit-color);
 }
 
 .service-card__button--delete {
-  background-color: var(--button-delete-color);
+    background-color: var(--button-delete-color);
 }
 
 .service-card__button--doctors {
-  background-color: var(--button-services-color);
+    background-color: var(--button-services-color);
 }
 
 .service-card__button--patients {
-  background-color: var(--button-services-color);
+    background-color: var(--button-services-color);
 }
 
 .service-card__button:hover {
-  filter: brightness(85%);
+    filter: brightness(85%);
 }
 
 .footer {
-  display: flex;
-  background-color: var(--text-light-color);
-  border: 1px solid var(--primary-light-color);
-  border-radius: 8px;
-  padding: 20px;
-  margin-top: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  justify-content: space-between;
+    display: flex;
+    background-color: var(--text-light-color);
+    border: 1px solid var(--primary-light-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    justify-content: space-between;
 }
 
 .footer__button--add {
-  width: 160px;
-  font-size: 14px;
-  background-color: var(--button-edit-color);
-  color: var(--text-light-color);
-  border: none;
-  border-radius: 4px;
-  padding: 8px 10px;
-  cursor: pointer;
-  transition: filter 0.3s;
+    width: 160px;
+    font-size: 14px;
+    background-color: var(--button-edit-color);
+    color: var(--text-light-color);
+    border: none;
+    border-radius: 4px;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: filter 0.3s;
 }
 
-.footer__button--add:hover {
-  filter: brightness(85%);
-  cursor: pointer;
-}
+    .footer__button--add:hover {
+        filter: brightness(85%);
+        cursor: pointer;
+    }
 
 #overlay {
-  position: fixed; /* Фиксированное позиционирование по всему экрану */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-  opacity: 0; /* Изначально оверлей прозрачный */
-  transition: opacity 0.5s ease; /* Плавный переход прозрачности */
-  display: none;
+    position: fixed; /* Фиксированное позиционирование по всему экрану */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    opacity: 0; /* Изначально оверлей прозрачный */
+    transition: opacity 0.5s ease; /* Плавный переход прозрачности */
+    display: none;
 }
 
 .modal {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  background-color: var(--background-color);
-  border-radius: 8px;
-  padding: 20px;
-  width: 400px;
-  z-index: 2;
-  opacity: 0; /* Изначально модальное окно прозрачное */
-  transform: translate(-50%, -50%) scale(0.9); /* Убрано пересечение с translate(-50%, -50%) */
-  transition: opacity 0.5s ease, transform 0.5s ease; /* Плавные переходы */
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: var(--background-color);
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    z-index: 2;
+    opacity: 0; /* Изначально модальное окно прозрачное */
+    transform: translate(-50%, -50%) scale(0.9); /* Убрано пересечение с translate(-50%, -50%) */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Плавные переходы */
 }
 
 .modal__title {
-  text-align: center;
-  font-size: 18px;
-  margin-bottom: 20px;
-  color: var(--text-dark-color);
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: var(--text-dark-color);
 }
 
 .modal input,
 .modal select {
-  color: var(--text-dark-color);
-  font-size: 14px;
-  border: none;
-  background-color: var(--text-light-color);
-  border: 1px solid var(--primary-light-color);
-  border-radius: 4px;
-  padding: 12px 0;
-  width: 100%;
-  margin-bottom: 10px;
-  text-align: center;
-  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+    color: var(--text-dark-color);
+    font-size: 14px;
+    border: none;
+    background-color: var(--text-light-color);
+    border: 1px solid var(--primary-light-color);
+    border-radius: 4px;
+    padding: 12px 0;
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
 }
 
-.modal input:focus {
-  outline: none;
-  background-color: var(--text-light-color);
-}
+    .modal input:focus {
+        outline: none;
+        background-color: var(--text-light-color);
+    }
 
 .modal__buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
 }
 
 .modal__buttons--saveData,
 .modal__buttons--hideModal {
-  width: 120px;
-  font-size: 14px;
-  border: none;
-  color: var(--text-light-color);
-  padding: 8px 10px;
-  border-radius: 4px;
+    width: 120px;
+    font-size: 14px;
+    border: none;
+    color: var(--text-light-color);
+    padding: 8px 10px;
+    border-radius: 4px;
 }
 
 .modal__buttons--saveData {
-  background-color: var(--button-edit-color);
-  transition: filter 0.3s;
+    background-color: var(--button-edit-color);
+    transition: filter 0.3s;
 }
 
-.modal__buttons--saveData:hover {
-  filter: brightness(85%);
-  cursor: pointer;
-}
+    .modal__buttons--saveData:hover {
+        filter: brightness(85%);
+        cursor: pointer;
+    }
 
 .modal__buttons--hideModal {
-  background-color: var(--button-delete-color);
-  transition: filter 0.3s;
+    background-color: var(--button-delete-color);
+    transition: filter 0.3s;
 }
 
-.modal__buttons--hideModal:hover {
-  filter: brightness(85%);
-  cursor: pointer;
-}
+    .modal__buttons--hideModal:hover {
+        filter: brightness(85%);
+        cursor: pointer;
+    }
 
 @media (max-width: 768px) {
-  .service-card {
-    flex-basis: 100%;
-  }
+    .service-card {
+        flex-basis: 100%;
+    }
 
-  .service-card__button {
-    width: 100px;
-    font-size: 14px;
-    padding: 8px 16px;
-  }
+    .service-card__button {
+        width: 100px;
+        font-size: 14px;
+        padding: 8px 16px;
+    }
 
-  .content__title {
-    font-size: 25px;
-  }
+    .content__title {
+        font-size: 25px;
+    }
 }
+
+/* Стили для модального окна с отображением пациентов доктора */
+#servicePatientsModal {
+    /* position: absolute; */
+    /* top: 50%; */
+    /* left: 50%; */
+    background-color: var(--text-light-color);
+    border: 1px solid var(--primary-light-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    height: auto;
+    color: var(--text-dark-color);
+    transform: translate(-50%, -50%) scale(1);
+    font-size: 14px;
+    /* cursor: move; */
+}
+
+    #servicePatientsModal table {
+        border-collapse: collapse;
+        margin-top: 20px;
+        table-layout: fixed;
+        /* margin-bottom: 10px; */
+    }
+
+    #servicePatientsModal th,
+    #servicePatientsModal td {
+        text-align: center;
+        border: 1px solid var(--primary-light-color);
+        padding: 8px;
+        text-align: left;
+    }
+
+    #servicePatientsModal th {
+        text-align: center;
+        padding: 20px;
+        background-color: var(--primary-color);
+        color: var(--text-light-color);
+        font-weight: 500;
+    }
+
+    #servicePatientsModal tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #servicePatientsModal tr:hover {
+        transition: 0.5s;
+    }
+
+    #servicePatientsModal tr:hover {
+        background-color: var(--primary-light-color);
+    }
+
+    #servicePatientsModal td:first-child {
+        font-weight: 700;
+    }
+
+    #servicePatientsModal th:nth-child(1),
+    #servicePatientsModal td:nth-child(1) {
+        width: 400px; /* Ширина первого столбца */
+    }
+
+    #servicePatientsModal th:nth-child(2),
+    #servicePatientsModal td:nth-child(2) {
+        width: 15%; /* Ширина второго столбца */
+    }
+
+    #servicePatientsModal th:nth-child(3),
+    #servicePatientsModal td:nth-child(3) {
+        width: 15%; /* Ширина третьего столбца */
+    }
+
+    #servicePatientsModal th:nth-child(4),
+    #servicePatientsModal td:nth-child(4) {
+        width: 15%; /* Ширина четвертого столбца */
+    }
+
+    #servicePatientsModal th:nth-child(5),
+    #servicePatientsModal td:nth-child(5) {
+        width: 20%; /* Ширина пятого столбца */
+    }
+
+    #servicePatientsModal th:nth-child(6),
+    #servicePatientsModal td:nth-child(6) {
+        width: 20%; /* Ширина шестого столбца */
+    }
+
+    /* Скругление верхних углов */
+    #servicePatientsModal th:first-child {
+        border-top-left-radius: 8px; /* Скругление верхнего левого угла */
+    }
+
+    #servicePatientsModal th:last-child {
+        border-top-right-radius: 8px; /* Скругление верхнего правого угла */
+    }
+/* Стили для модального окна с отображением пациентов доктора */
+#serviceDoctorsModal {
+    /* position: absolute; */
+    /* top: 50%; */
+    /* left: 50%; */
+    background-color: var(--text-light-color);
+    border: 1px solid var(--primary-light-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    height: auto;
+    color: var(--text-dark-color);
+    transform: translate(-50%, -50%) scale(1);
+    font-size: 14px;
+    /* cursor: move; */
+}
+
+    #serviceDoctorsModal table {
+        border-collapse: collapse;
+        margin-top: 20px;
+        table-layout: fixed;
+        /* margin-bottom: 10px; */
+    }
+
+    #serviceDoctorsModal th,
+    #serviceDoctorsModal td {
+        text-align: center;
+        border: 1px solid var(--primary-light-color);
+        padding: 8px;
+        text-align: left;
+    }
+
+    #serviceDoctorsModal th {
+        text-align: center;
+        padding: 20px;
+        background-color: var(--primary-color);
+        color: var(--text-light-color);
+        font-weight: 500;
+    }
+
+    #serviceDoctorsModal tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #serviceDoctorsModal tr:hover {
+        transition: 0.5s;
+    }
+
+    #serviceDoctorsModal tr:hover {
+        background-color: var(--primary-light-color);
+    }
+
+    #serviceDoctorsModal td:first-child {
+        font-weight: 700;
+    }
+
+    #serviceDoctorsModal th:nth-child(1),
+    #serviceDoctorsModal td:nth-child(1) {
+        width: 400px; /* Ширина первого столбца */
+    }
+
+    #serviceDoctorsModal th:nth-child(2),
+    #serviceDoctorsModal td:nth-child(2) {
+        width: 15%; /* Ширина второго столбца */
+    }
+
+    #serviceDoctorsModal th:nth-child(3),
+    #serviceDoctorsModal td:nth-child(3) {
+        width: 15%; /* Ширина третьего столбца */
+    }
+
+    #serviceDoctorsModal th:nth-child(4),
+    #serviceDoctorsModal td:nth-child(4) {
+        width: 15%; /* Ширина четвертого столбца */
+    }
+
+    #serviceDoctorsModal th:nth-child(5),
+    #serviceDoctorsModal td:nth-child(5) {
+        width: 20%; /* Ширина пятого столбца */
+    }
+
+    #serviceDoctorsModal th:nth-child(6),
+    #serviceDoctorsModal td:nth-child(6) {
+        width: 20%; /* Ширина шестого столбца */
+    }
+
+    /* Скругление верхних углов */
+    #serviceDoctorsModal th:first-child {
+        border-top-left-radius: 8px; /* Скругление верхнего левого угла */
+    }
+
+    #serviceDoctorsModal th:last-child {
+        border-top-right-radius: 8px; /* Скругление верхнего правого угла */
+    }

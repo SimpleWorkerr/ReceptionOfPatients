@@ -46,7 +46,7 @@ async function createPatientCardElement(patient) {
     //Дата рождения пациента
     const patientBirthDate = document.createElement("p");
     patientBirthDate.className = "patient-card__detail";
-    patientBirthDate.textContent = `Дата рождения: ${patient.BirthDate}`;
+    patientBirthDate.textContent = `Дата рождения: ${patient.BirthDate.slice(0, 10)}`;
 
     //Создаём блок с кнопками на карточке
     const cardPatientActions = document.createElement("div");
@@ -546,7 +546,7 @@ function createTableRow(doctor) {
     doctorFatherName.textContent = `${doctor.FatherName}`;
 
     let doctorStartWorkDate = document.createElement("td");
-    doctorStartWorkDate.textContent = `${doctor.StartWorkDate}`;
+    doctorStartWorkDate.textContent = `${doctor.StartWorkDate.slice(0, 10)}`;
 
     let doctorOfficeNumber = document.createElement("td");
     doctorOfficeNumber.textContent = `${doctor.OfficeNumber}`;
